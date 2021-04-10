@@ -10,7 +10,7 @@ de los mismos.
 
 ## Captura de imagenes
 Para la captura de imagenes destinadas al entrenamiento de los modelos se ha usado:
-- [Arduino_cam_collection.pde](): Script de Processing que recive imagenes capturadas con Arduino, las etiqueta y las
-  guarda.
-- [Embbeded_cam_collection.ino](): Programa para Arduino Nano 33 BLE Sense que captura imagenes y las transmite al
-  equipo connectado al microcontrolador.
+- [Arduino_cam_collection.pde](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Arduino_cam_collection.pde):
+  Script de Processing que recive imagenes capturadas con Arduino, las etiqueta y las guarda.
+- [Embbeded_cam_collection.ino](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Embbeded_cam_collection/Embbeded_cam_collection.ino):
+  Programa para Arduino Nano 33 BLE Sense que captura imagenes y las transmite al equipo connectado al microcontrolador.
