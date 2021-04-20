@@ -2,7 +2,7 @@ from PIL import Image
 import os
 
 
-def centered_crop(filepath: str, width: int, height: int, output_path=False, return_image=False, im=False) -> Image:
+def centered_crop(filepath: str, width: int, height: int, output_path=None, return_image=False, im=False) -> Image:
     """
     Recorta los extremos de la imagen para que tenga la resolución indicada.
     Args:
@@ -42,7 +42,7 @@ def centered_crop(filepath: str, width: int, height: int, output_path=False, ret
         return im
 
 
-def to_grayscale(filepath: str, output_path=False, return_image=False, im=False) -> Image:
+def to_grayscale(filepath: str, output_path=None, return_image=False, im=False) -> Image:
     """
     Convierte una imagen RGB a escala de grises.
     Args:
@@ -66,7 +66,7 @@ def to_grayscale(filepath: str, output_path=False, return_image=False, im=False)
         return im
 
 
-def rescale(filepath: str, width: int, height: int, output_path=False, return_image=False, im=False) -> Image:
+def rescale(filepath: str, width: int, height: int, output_path=None, return_image=False, im=False) -> Image:
     """
     Reescala una imagen para que tenga la resolución indicada.
     Args:
@@ -92,7 +92,7 @@ def rescale(filepath: str, width: int, height: int, output_path=False, return_im
         return im
 
 
-def micro_preprocessing(filepath, output_path=False, return_image=False, im=False) -> Image:
+def micro_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes captadas con microcontrolador.
     Args:
@@ -114,7 +114,7 @@ def micro_preprocessing(filepath, output_path=False, return_image=False, im=Fals
         return im
     
     
-def external_mask_preprocessing(filepath, output_path=False, return_image=False, im=False) -> Image:
+def external_mask_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes externas de la clase mask.
     Args:
@@ -137,7 +137,7 @@ def external_mask_preprocessing(filepath, output_path=False, return_image=False,
         return im
 
 
-def external_nothing_preprocessing(filepath, output_path=False, return_image=False, im=False) -> Image:
+def external_nothing_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes externas de la clase nothing.
     Args:
@@ -181,7 +181,7 @@ def preprocess_external_mask_images(origin_path: str, destination_path: str):
     try:
         os.makedirs(destination_path)
     except OSError as e:
-        print("El directorio de destino ya existe.")
+        print(f"El directorio de destino ya existe.\n{e}")
 
     img_id = 1
     for filename in os.listdir(origin_path):
@@ -202,7 +202,7 @@ def preprocess_external_nothing_images(origin_path: str, destination_path: str):
     try:
         os.makedirs(destination_path)
     except OSError as e:
-        print("El directorio de destino ya existe.")
+        print(f"El directorio de destino ya existe.\n{e}")
 
     img_id = 1
     for filename in os.listdir(origin_path):
@@ -210,7 +210,7 @@ def preprocess_external_nothing_images(origin_path: str, destination_path: str):
         img_id += 1
 
 
-def preprocess_micro_images(origin_path: str, destination_path: str, classes=False):
+def preprocess_micro_images(origin_path: str, destination_path: str, classes=None):
     """
     Aplica el preprocesado para imágenes capturadas con el microcontrolador a todas las imágenes en origin_path
     (separadas en carpetas por clases) y guarda el resultado en destination_path. Por defecto se preprocesan todas las
@@ -232,7 +232,7 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Fal
         try:
             os.makedirs(destination)
         except OSError as e:
-            print("El directorio de destino ya existe.")
+            print(f"El directorio de destino ya existe.\n{e}")
 
         img_id = 1
         for filename in os.listdir(origin):
@@ -240,7 +240,7 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Fal
             img_id += 1
 
 
-def preprocess_external_images(origin_path: str, destination_path: str, classes=False):
+def preprocess_external_images(origin_path: str, destination_path: str, classes=None):
     """
     Aplica el preprocesado para imágenes externas a todas las imágenes en origin_path (separadas en carpetas por clases)
     y guarda el resultado en destination_path. Por defecto se preprocesan todas las clases, pero se pueden delimitar con
@@ -261,7 +261,6 @@ def preprocess_external_images(origin_path: str, destination_path: str, classes=
             
         if name == "face":
             preprocess_micro_images(origin_path, destination_path, classes=["face"])
-        
         elif name == "mask":
             preprocess_external_mask_images(origin, destination)
         else:
@@ -271,5 +270,3 @@ def preprocess_external_images(origin_path: str, destination_path: str, classes=
 if __name__ == '__main__':
     preprocess_micro_images("../samples/microcontroller/image", "../samples/microcontroller/preprocessed_image")
     preprocess_external_images("../samples/external/image", "../samples/external/preprocessed_image")
-    pass
-

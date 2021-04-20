@@ -1,5 +1,5 @@
 /*
- * Este programa para Arduino BLE 33 Sense uitiliza el módulo de cámara
+ * Este programa para Arduino BLE 33 Sense utiliza el módulo de cámara
  * OV7675 para recoger muestras de imagen que se envían a un script de
  * processing que los guarda para ser utilizados en el desarrollo de
  * modelos de TinyML. 
@@ -7,11 +7,11 @@
  * Desarrollado por Daniel Martín Martínez para la realización del
  * Trabajo de Fin de Grado titulado Aplicación de modelos de aprendizaje
  * automático en microcontroladores.
- * Este programa se basa en el ejemplo de la libreria Arduino_OV767X que
+ * Este programa se basa en el ejemplo de la librería Arduino_OV767X que
  * se presenta en el artículo:
  * https://blog.arduino.cc/2020/06/24/machine-vision-with-low-cost-camera-modules/
  * El código para detectar cuando se usa el botón de la placa procede de
- * la libreria del curso de edX sobre TinyML:
+ * la librería del curso de edX sobre TinyML:
  * https://github.com/tinyMLx/arduino-library/blob/main/src/TinyMLShield.h
  */
 
@@ -19,17 +19,17 @@
 
 #define BUTTON_PIN 13
 
-// data es el buffer donde se guardan los datos de las imagenes capturadas.
+// data es el buffer donde se guardan los datos de las imágenes capturadas.
 byte data[176 * 144 * 2]; // QCIF: 176x144 X 2 bytes por píxel (RGB565)
 
-// Las variable siguientes sirven para detectar cuandon se pulsa el botón.
+// Las variable siguientes sirven para detectar cuando se pulsa el botón.
 unsigned long lastDebounceTime;
 unsigned long debounceDelay;
 bool lastButtonState;
 bool buttonState;
 
 
-// Incializamos la variable que guarda el numero de bytes por captura.
+// Inicializamos la variable que guarda el numero de bytes por captura.
 int bytesPerFrame;
 
 /**

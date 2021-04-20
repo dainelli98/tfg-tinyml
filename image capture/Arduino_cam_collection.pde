@@ -1,7 +1,7 @@
 /*
- Este programa sirve para realizar el muestreo de imagenes requerido para el
+ Este programa sirve para realizar el muestreo de imágenes requerido para el
  desarrollo de aplicaciones TinyML, a través del microcontrolador Arduino
- BLE 33 Sense y su módulom de camara OV7675.
+ BLE 33 Sense y su módulo de camara OV7675.
  
  Desarrollado por Daniel Martín Martínez para la realización del
  Trabajo de Fin de Grado titulado Aplicación de modelos de aprendizaje
@@ -27,7 +27,7 @@ final int cameraHeight = 144;
 final int cameraBytesPerPixel = 2;
 final int bytesPerFrame = cameraWidth * cameraHeight * cameraBytesPerPixel;
 
-// Carpeta donde se guardan las imagenes
+// Carpeta donde se guardan las imágenes
 final String path = "/home/daniel/Documentos/TFG/Samples";
 
 String sessionName;
@@ -41,7 +41,7 @@ byte[] frameBuffer = new byte[bytesPerFrame];
 final int nclasses = 3;
 final String[] classes = {"face", "mask", "nothing"};
 
-// Añadimos contadores para dar nombre a las imagenes;
+// Añadimos contadores para dar nombre a las imágenes;
 int[] counters = new int[nclasses];
 
 /**
@@ -58,9 +58,9 @@ void ask_class() {
 
 
 /**
- Permite indidcar la classe sobre la que se recogen las muestras mediante las teclas del teclado.
+ Permite indicar la clase sobre la que se recogen las muestras mediante las teclas del teclado.
 */
-void keyPressed(){
+void keyPressed() {
   if (key == '1' && nclasses >= 1) {
     selectedClass = 0;
   }
@@ -98,10 +98,10 @@ void keyPressed(){
 
 void setup()
 {
-  // Damos nombre a la sessión
+  // Damos nombre a la sesión.
   sessionName = String.valueOf(day()) + "-" + String.valueOf(month()) + "-" + String.valueOf(year());
   
-  // Ajustamos el tamaño del visor (debería ser de dimensiones iguales a las imagenes que se esperan).
+  // Ajustamos el tamaño del visor (debería ser de dimensiones iguales a las imágenes que se esperan).
   size(1584, 1296);
   
   // Inicializamos contadores.
