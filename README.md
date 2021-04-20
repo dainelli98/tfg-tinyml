@@ -20,7 +20,13 @@ Para la captura de imagenes destinadas al entrenamiento de los modelos se ha usa
   
 ## Preprocesado
 Procedimientos que se han empleado para el preprocesado de datos de imagen y audio junto con los scripts usados:
-- [data_count.ipynb](): Notebook que muestra los datos de los que se dispone inicialmente sin preprocesar.
-- [audio_preprocessing.ipynb](): Notebook que muestra las técnicas empleadas para el preprocesado de datos de audio.
-- [image_preprocessing.ipynb](): Notebook que muestra las técnicas empleadas para el preprocesado de datos de imagen.
-- [image_preprocessing.py](): Script de Python que contiene las funciones que realizan el preprocesado de los datos de imagen.
+- [data_count.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/data_count.ipynb):
+  Notebook que muestra los datos de los que se dispone inicialmente sin preprocesar.
+- [data_count.py](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/data_count.py):
+  Script de Python que contiene las funciones que realizan el contado de datos.
+- [audio_preprocessing.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/audio_preprocessing.ipynb):
+  Notebook que muestra las técnicas empleadas para el preprocesado de datos de audio.
+- [image_preprocessing.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/image_preprocessing.ipynb):
+  Notebook que muestra las técnicas empleadas para el preprocesado de datos de imagen.
+- [image_preprocessing.py](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/image_preprocessing.py):
+  Script de Python que contiene las funciones que realizan el preprocesado de los datos de imagen.
