@@ -10,14 +10,12 @@ de los mismos.
 
 Algunos de los notebooks usados tienen scripts de python con el mismo nombre asociados que contienen funciones que se
 utilizan en dichos notebooks.
-
 ## Captura de imágenes
 Para la captura de imágenes destinadas al entrenamiento de los modelos se ha usado:
 - [Arduino_cam_collection.pde](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Arduino_cam_collection.pde):
   Script de Processing que recibe imágenes capturadas con Arduino, las etiqueta y las guarda.
-- [Embedded_cam_collection.ino](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Embbeded_cam_collection/Embbeded_cam_collection.ino):
+- [Embedded_cam_collection.ino](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Embedded_cam_collection/Embedded_cam_collection.ino):
   Programa para Arduino Nano 33 BLE Sense que captura imágenes y las transmite al equipo conectado al microcontrolador.
-  
 ## Preprocesado
 Procedimientos que se han empleado para el preprocesado de datos de imagen y audio junto con los scripts usados:
 - [data_count.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/data_count.ipynb):
@@ -30,3 +28,11 @@ Procedimientos que se han empleado para el preprocesado de datos de imagen y aud
   Notebook que muestra las técnicas empleadas para el preprocesado de datos de imagen.
 - [image_preprocessing.py](https://github.com/dainelli98/tfg-tinyml/blob/main/preprocessing/image_preprocessing.py):
   Script de Python que contiene las funciones que realizan el preprocesado de los datos de imagen.
+## Entrenamiento de modelos
+Notebooks y scripts de Python complementarios para el entrenamiento de modelos de aprendizaje automático de sonido e
+imagen.
+### Entrenamiento de modelos de sonido
+Notebooks y scripts complementarios para el entrenamiento de modelos de sonido:
+- [audio_model_training.ipynb](): Notebook que ejecuta el entrenamiento de modelos de audio.
+- [audio_model_training.py](): Script de Python que contiene las funciones principales que realizan el entrenamiento de modelos de audio.
+- [audio_processor.py](): Script de Python que implementa la clase AudioProcessor, encargada de gestionar las muestras de sonido utilizadas durante el entrenamiento y su pipeline de preprocesado.

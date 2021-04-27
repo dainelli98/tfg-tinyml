@@ -13,8 +13,8 @@ def centered_crop(filepath: str, width: int, height: int, output_path=None, retu
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image recortada que se ha obtenido como resultado de la operación.
-
+    Returns:
+        Image recortada que se ha obtenido como resultado de la operación.
     """
     if not im:
         im = Image.open(filepath)
@@ -51,8 +51,8 @@ def to_grayscale(filepath: str, output_path=None, return_image=False, im=False) 
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image en escala de grises que se ha obtenido como resultado de la operación.
-
+    Returns:
+        Image en escala de grises que se ha obtenido como resultado de la operación.
     """
     if not im:
         im = Image.open(filepath)
@@ -77,8 +77,8 @@ def rescale(filepath: str, width: int, height: int, output_path=None, return_ima
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image reescalada que se ha obtenido como resultado de la operación.
-
+    Returns:
+        Image reescalada que se ha obtenido como resultado de la operación.
     """
     if not im:
         im = Image.open(filepath)
@@ -101,8 +101,8 @@ def micro_preprocessing(filepath, output_path=None, return_image=False, im=False
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image captada con microcontrolador preprocesada.
-
+    Returns:
+        Image captada con microcontrolador preprocesada.
     """
     if not im:
         im = Image.open(filepath)
@@ -123,8 +123,8 @@ def external_mask_preprocessing(filepath, output_path=None, return_image=False, 
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image externa de la clase mask preprocesada.
-
+    Returns:
+        Image externa de la clase mask preprocesada.
     """
     if not im:
         im = Image.open(filepath)
@@ -146,8 +146,8 @@ def external_nothing_preprocessing(filepath, output_path=None, return_image=Fals
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
 
-    Returns:    Image externa de la clase nothing preprocesada.
-
+    Returns:
+        Image externa de la clase nothing preprocesada.
     """
     if not im:
         im = Image.open(filepath)
@@ -175,13 +175,10 @@ def preprocess_external_mask_images(origin_path: str, destination_path: str):
     Args:
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
-
     """
     # Creamos el directorio de destino si este no existe.
-    try:
-        os.makedirs(destination_path)
-    except OSError as e:
-        print(f"El directorio de destino ya existe.\n{e}")
+    if not os.path.exists(destination_path):
+        os.mkdir(destination_path)
 
     img_id = 1
     for filename in os.listdir(origin_path):
@@ -196,13 +193,10 @@ def preprocess_external_nothing_images(origin_path: str, destination_path: str):
     Args:
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
-
     """
     # Creamos el directorio de destino si este no existe.
-    try:
-        os.makedirs(destination_path)
-    except OSError as e:
-        print(f"El directorio de destino ya existe.\n{e}")
+    if not os.path.exists(destination_path):
+        os.mkdir(destination_path)
 
     img_id = 1
     for filename in os.listdir(origin_path):
@@ -219,7 +213,6 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Non
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
         classes:            lista de str con los nombres de las clases que se quieren preprocesar.
-
     """
     if not classes:
         classes = os.listdir(origin_path)
@@ -229,10 +222,8 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Non
         destination = f"{destination_path}/{name}"
 
         # Creamos el directorio de destino si este no existe.
-        try:
-            os.makedirs(destination)
-        except OSError as e:
-            print(f"El directorio de destino ya existe.\n{e}")
+        if not os.path.exists(destination):
+            os.mkdir(destination)
 
         img_id = 1
         for filename in os.listdir(origin):
@@ -249,7 +240,6 @@ def preprocess_external_images(origin_path: str, destination_path: str, classes=
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
         classes:            lista de str con los nombres de las clases que se quieren preprocesar.
-
     """
     if not classes:
         classes = os.listdir(origin_path)

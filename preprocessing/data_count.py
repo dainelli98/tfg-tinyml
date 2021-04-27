@@ -8,8 +8,8 @@ def count_dir_files(directory: str) -> int:
     Args:
         directory:  str del directorio que contiene los archivos que se quiere contar.
 
-    Returns:    int que indica el número de archivos que contiene el directorio.
-
+    Returns:
+        int que indica el número de archivos que contiene el directorio.
     """
     return len([file for file in os.listdir(directory) if os.path.isfile(os.path.join(directory, file))])
 
@@ -20,7 +20,6 @@ def print_class_count(directory: str, data_desc=""):
     Args:
         directory:  str del directorio que contiene las carpetas de las classes.
         data_desc:  str con una descripción opcional de los datos que se cuentan.
-
     """
     classes = os.listdir(directory)
     if data_desc != "":
