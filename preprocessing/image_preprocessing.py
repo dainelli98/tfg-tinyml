@@ -92,7 +92,7 @@ def rescale(filepath: str, width: int, height: int, output_path=None, return_ima
         return im
 
 
-def micro_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
+def micro_preprocessing(filepath, output_path=None, return_image=False, im=False, color=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes captadas con microcontrolador.
     Args:
@@ -100,6 +100,7 @@ def micro_preprocessing(filepath, output_path=None, return_image=False, im=False
         output_path:    str con el path del archivo que se quiere guardar con el resultado del recorte.
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
+        color:          bool que indica si se quiere conservar el color de la imagen.
 
     Returns:
         Image captada con microcontrolador preprocesada.
@@ -107,14 +108,15 @@ def micro_preprocessing(filepath, output_path=None, return_image=False, im=False
     if not im:
         im = Image.open(filepath)
 
-    im = to_grayscale("", return_image=True, im=im)
+    if not color:
+        im = to_grayscale("", return_image=True, im=im)
     im = centered_crop("", 96, 96, return_image=True, output_path=output_path, im=im)
 
     if return_image:
         return im
     
     
-def external_mask_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
+def external_mask_preprocessing(filepath, output_path=None, return_image=False, im=False, color=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes externas de la clase mask.
     Args:
@@ -122,6 +124,7 @@ def external_mask_preprocessing(filepath, output_path=None, return_image=False, 
         output_path:    str con el path del archivo que se quiere guardar con el resultado del recorte.
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
+        color:          bool que indica si se quiere conservar el color de la imagen.
 
     Returns:
         Image externa de la clase mask preprocesada.
@@ -130,14 +133,15 @@ def external_mask_preprocessing(filepath, output_path=None, return_image=False, 
         im = Image.open(filepath)
         
     im = rescale("", 128, 128, return_image=True, im=im)
-    im = to_grayscale("", return_image=True, im=im)
+    if not color:
+        im = to_grayscale("", return_image=True, im=im)
     im = centered_crop("", 96, 96, return_image=True, output_path=output_path, im=im)
 
     if return_image:
         return im
 
 
-def external_nothing_preprocessing(filepath, output_path=None, return_image=False, im=False) -> Image:
+def external_nothing_preprocessing(filepath, output_path=None, return_image=False, im=False, color=False) -> Image:
     """
     Aplica el preprocesado que se ha decidido aplicar a las imágenes externas de la clase nothing.
     Args:
@@ -145,6 +149,7 @@ def external_nothing_preprocessing(filepath, output_path=None, return_image=Fals
         output_path:    str con el path del archivo que se quiere guardar con el resultado del recorte.
         return_image:   bool que indica que se quiere que se devuelva la imagen resultante de la operación.
         im:             Image previamente abierta, de uso alternativo a filepath.
+        color:          bool que indica si se quiere conservar el color de la imagen.
 
     Returns:
         Image externa de la clase nothing preprocesada.
@@ -161,20 +166,22 @@ def external_nothing_preprocessing(filepath, output_path=None, return_image=Fals
         new_height = 96
 
     im = rescale("", new_width, new_height, return_image=True, im=im)
-    im = to_grayscale("", return_image=True, im=im)
+    if not color:
+        im = to_grayscale("", return_image=True, im=im)
     im = centered_crop("", 96, 96, output_path=output_path, return_image=True, im=im)
 
     if return_image:
         return im
 
 
-def preprocess_external_mask_images(origin_path: str, destination_path: str):
+def preprocess_external_mask_images(origin_path: str, destination_path: str, color=False):
     """
     Aplica el preprocesado para imágenes externas de la clase mask a todas las imágenes en origin_path y guarda el
     resultado en destination_path.
     Args:
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
+        color:          bool que indica si se quiere conservar el color de la imagen.
     """
     # Creamos el directorio de destino si este no existe.
     if not os.path.exists(destination_path):
@@ -182,17 +189,19 @@ def preprocess_external_mask_images(origin_path: str, destination_path: str):
 
     img_id = 1
     for filename in os.listdir(origin_path):
-        external_mask_preprocessing(f"{origin_path}/{filename}", output_path=f"{destination_path}/mask{img_id}.jpg")
+        external_mask_preprocessing(f"{origin_path}/{filename}", output_path=f"{destination_path}/mask{img_id}.jpg",
+                                    color=color)
         img_id += 1
 
 
-def preprocess_external_nothing_images(origin_path: str, destination_path: str):
+def preprocess_external_nothing_images(origin_path: str, destination_path: str, color=False):
     """
     Aplica el preprocesado para imágenes externas de la clase nothing a todas las imágenes en origin_path y guarda el
     resultado en destination_path.
     Args:
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
+        color:          bool que indica si se quiere conservar el color de la imagen.
     """
     # Creamos el directorio de destino si este no existe.
     if not os.path.exists(destination_path):
@@ -200,11 +209,12 @@ def preprocess_external_nothing_images(origin_path: str, destination_path: str):
 
     img_id = 1
     for filename in os.listdir(origin_path):
-        external_nothing_preprocessing(f"{origin_path}/{filename}", output_path=f"{destination_path}/mask{img_id}.jpg")
+        external_nothing_preprocessing(f"{origin_path}/{filename}", output_path=f"{destination_path}/mask{img_id}.jpg",
+                                       color=color)
         img_id += 1
 
 
-def preprocess_micro_images(origin_path: str, destination_path: str, classes=None):
+def preprocess_micro_images(origin_path: str, destination_path: str, classes=None, color=False):
     """
     Aplica el preprocesado para imágenes capturadas con el microcontrolador a todas las imágenes en origin_path
     (separadas en carpetas por clases) y guarda el resultado en destination_path. Por defecto se preprocesan todas las
@@ -213,6 +223,7 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Non
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
         classes:            lista de str con los nombres de las clases que se quieren preprocesar.
+        color:          bool que indica si se quiere conservar el color de la imagen.
     """
     if not classes:
         classes = os.listdir(origin_path)
@@ -227,11 +238,11 @@ def preprocess_micro_images(origin_path: str, destination_path: str, classes=Non
 
         img_id = 1
         for filename in os.listdir(origin):
-            micro_preprocessing(f"{origin}/{filename}", output_path=f"{destination}/{name}{img_id}.jpg")
+            micro_preprocessing(f"{origin}/{filename}", output_path=f"{destination}/{name}{img_id}.jpg", color=color)
             img_id += 1
 
 
-def preprocess_external_images(origin_path: str, destination_path: str, classes=None):
+def preprocess_external_images(origin_path: str, destination_path: str, classes=None, color=False):
     """
     Aplica el preprocesado para imágenes externas a todas las imágenes en origin_path (separadas en carpetas por clases)
     y guarda el resultado en destination_path. Por defecto se preprocesan todas las clases, pero se pueden delimitar con
@@ -240,6 +251,7 @@ def preprocess_external_images(origin_path: str, destination_path: str, classes=
         origin_path:        str con el path donde se encuentran las imágenes por preprocesar.
         destination_path:   str con el path donde se guardarán las imágenes preprocesadas.
         classes:            lista de str con los nombres de las clases que se quieren preprocesar.
+        color:          bool que indica si se quiere conservar el color de la imagen.
     """
     if not classes:
         classes = os.listdir(origin_path)
@@ -250,13 +262,17 @@ def preprocess_external_images(origin_path: str, destination_path: str, classes=
         destination = f"{destination_path}/{name}"
             
         if name == "face":
-            preprocess_micro_images(origin_path, destination_path, classes=["face"])
+            preprocess_micro_images(origin_path, destination_path, classes=["face"], color=color)
         elif name == "mask":
-            preprocess_external_mask_images(origin, destination)
+            preprocess_external_mask_images(origin, destination, color=color)
         else:
-            preprocess_external_nothing_images(origin, destination)
+            preprocess_external_nothing_images(origin, destination, color=color)
 
 
 if __name__ == '__main__':
-    preprocess_micro_images("../samples/microcontroller/image", "../samples/microcontroller/preprocessed_image")
-    preprocess_external_images("../samples/external/image", "../samples/external/preprocessed_image")
+    preprocess_micro_images("../samples/microcontroller/image", "../samples/microcontroller/preprocessed image")
+    preprocess_micro_images("../samples/microcontroller/image", "../samples/microcontroller/color preprocessed image",
+                            color=True)
+    preprocess_external_images("../samples/external/image", "../samples/external/preprocessed image")
+    preprocess_external_images("../samples/external/image", "../samples/external/color preprocessed image",
+                               color=True)

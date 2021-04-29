@@ -31,8 +31,3 @@ Procedimientos que se han empleado para el preprocesado de datos de imagen y aud
 ## Entrenamiento de modelos
 Notebooks y scripts de Python complementarios para el entrenamiento de modelos de aprendizaje automático de sonido e
 imagen.
-### Entrenamiento de modelos de sonido
-Notebooks y scripts complementarios para el entrenamiento de modelos de sonido:
-- [audio_model_training.ipynb](): Notebook que ejecuta el entrenamiento de modelos de audio.
-- [audio_model_training.py](): Script de Python que contiene las funciones principales que realizan el entrenamiento de modelos de audio.
-- [audio_processor.py](): Script de Python que implementa la clase AudioProcessor, encargada de gestionar las muestras de sonido utilizadas durante el entrenamiento y su pipeline de preprocesado.
