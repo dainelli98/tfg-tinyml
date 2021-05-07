@@ -54,7 +54,7 @@ def partition_data(data_dir: str, test_percentage: float, extension: str, seed: 
                     copyfile(f"{data_dir}/{name}/{file}", f"{data_dir}/test/{name}/{name}{test_count + 1}.{extension}")
                     test_count += 1
             print(f"\t- {nfiles} muestras de la clase {name} donde {train_count} son para entrenamiento y {test_count}"
-                  f" son para test")
+                  f" son para test.")
 
 
 if __name__ == '__main__':
