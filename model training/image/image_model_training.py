@@ -112,46 +112,6 @@ def demo_image_dataset(dataset: Any, class_names=None):
             ax.axis("off")
 
 
-def get_mobilenet_model(alpha: float, nclasses: int, input_shape: (int, int, int), train_dataset: Any,
-                        model_name: str) -> Any:
-    """
-    Devuelve un modelo MobileNetV1 con los parámetros indicados.
-    Args:
-        alpha:          float que controla la amplitud del modelo MobileNet usado.
-        nclasses:       int con el número de clases distintas que debe predecir el modelo.
-        input_shape:    (int, int, int) con las dimensiones del input.
-        train_dataset:  Any con el dataset de entrenamiento.
-        model_name:     str con el nombre que se le da al modelo.
-
-    Returns:
-        Any modelo MobileNetV1 con con los parámetros indicados.
-    """
-
-    mobilenet = tf.keras.applications.MobileNet(input_shape=input_shape, include_top=False, weights=None, alpha=alpha)
-    mobilenet.summary()
-
-    image_batch, label_batch = next(iter(train_dataset))
-    feature_batch = mobilenet(image_batch)
-    # print(feature_batch.shape)
-
-    global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
-
-    feature_batch_average = global_average_layer(feature_batch)
-
-    prediction_layer = tf.keras.layers.Dense(nclasses)
-    prediction_batch = prediction_layer(feature_batch_average)
-    print(prediction_batch.shape)
-
-    inputs = tf.keras.Input(shape=input_shape)
-    x = mobilenet(inputs, training=False)
-    x = global_average_layer(x)
-    x = tf.keras.layers.Dropout(0.2)(x)
-    outputs = prediction_layer(x)
-    model = tf.keras.Model(inputs, outputs, name=model_name)
-
-    return model
-
-
 def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str):
     """
     Genera un modelo simple de imagen con el input shape y el número de clases indicados.
@@ -161,7 +121,7 @@ def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str
         model_name:     str con el nombre que se asigna al modelo.
 
     Returns:
-        Any modelo resultate.
+        Any modelo resultante.
     """
     return Sequential([
         layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1, input_shape=input_shape),    # Normalization
