@@ -1,9 +1,8 @@
 import tensorflow as tf
 import numpy as np
-from typing import List, Any
+from typing import Any
 import random as rnd
 import os
-import tensorflow_io as tfio
 import matplotlib.pyplot as plt
 from IPython import display
 from tensorflow.keras.models import Sequential
@@ -23,7 +22,7 @@ BATCH_SIZE = 32
 SEED = 135209
 
 # Tipo de datos
-DATA_TYPE = "Sound"
+DATA_TYPE = "Audio"
 SAMPLE_RATE = 16000     # Hz
 FRAME_LENGTH = 255
 FRAME_STEP = 128
@@ -35,7 +34,7 @@ NCLASSES = len(CLASS_NAMES)
 
 
 def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram_example=False,
-                       show_spectrogram_samples=False) -> Any:
+                       show_spectrogram_samples=False, batch=True) -> Any:
     """
     Args:
         files:                      Any labels y los paths de las muestras de audio.
@@ -43,6 +42,7 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
         show_spectrogram_example:   bool que indica si se quiere mostrar un ejemplo de conversion de waveform a
                                     espectrograma.
         show_spectrogram_samples:   bool que indica si se quiere mostrar ejemplos de los espectrogramas de las muestras.
+        batch:                      bool que indica si se aplica batch.
 
     Returns:
         Any dataset con las labels y las muestras de audio preprocesadas en formato espectrograma.
@@ -61,7 +61,8 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
     if show_spectrogram_samples:
         show_spectrograms(spectrogram_dataset)
 
-    spectrogram_dataset = spectrogram_dataset.batch(BATCH_SIZE)
+    if batch:
+        spectrogram_dataset = spectrogram_dataset.batch(BATCH_SIZE)
 
     spectrogram_dataset = spectrogram_dataset.cache().prefetch(AUTOTUNE)
 
