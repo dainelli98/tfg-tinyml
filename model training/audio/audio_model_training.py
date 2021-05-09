@@ -8,6 +8,7 @@ from IPython import display
 from tensorflow.keras.models import Sequential
 from tensorflow.keras import layers
 import pathlib
+import tensorflow_io as tfio
 
 # Definimos algunas constantes
 
@@ -205,7 +206,8 @@ def decode_audio_file(audio_file: Any) -> Any:
     Returns:
         Any con los datos del archivo de audio indicado.
     """
-    waveform, _ = tf.audio.decode_wav(audio_file)
+    waveform, sr_in = tf.audio.decode_wav(audio_file)
+    waveform = tfio.audio.resample(waveform, tf.cast(sr_in, tf.int64), SAMPLE_RATE)
     return tf.squeeze(waveform, axis=-1)
 
 
@@ -289,7 +291,7 @@ def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset
 
     return Sequential([
         layers.Input(shape=input_shape),
-        layers.experimental.preprocessing.Resizing(62, 62),
+        layers.experimental.preprocessing.Resizing(32, 32),
         normalization_layer,
         layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
         layers.MaxPooling2D(),

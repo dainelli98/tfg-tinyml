@@ -61,10 +61,7 @@ if __name__ == '__main__':
     seed = 3244
 
     partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/external/audio", 20, "wav", seed)
-    partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/external/color preprocessed image", 20, "jpg", seed)
     partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/external/preprocessed image", 20, "jpg", seed)
     partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/microcontroller/audio", 20, "wav", seed)
-    partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/microcontroller/color preprocessed image", 20,
-                   "jpg", seed)
     partition_data("/home/daniel/PycharmProjects/tfg-tinyml/samples/microcontroller/preprocessed image", 20, "jpg",
                    seed)
