@@ -8,25 +8,25 @@ from tensorflow.keras.models import Sequential
 # Definimos algunas constantes
 
 # Origen de los datos
-MICRO = 0
-EXT = 1
+MICRO: int = 0
+EXT: int = 1
 
 # Tamaño de bloque de muestras.
-BATCH_SIZE = 32
+BATCH_SIZE: int = 32
 
 # Resolución de las imágenes.
-IMG_SIZE = (96, 96)
-IMG_SHAPE = (96, 96, 1)
+IMG_SIZE: (int, int) = (96, 96)
+IMG_SHAPE: (int, int, int) = (96, 96, 1)
 
 # Seed asociada al entrenamiento.
-SEED = 13524
+SEED: int = 13524
 
 # Ajuste de los datasets
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
 # Tipo de datos
-DATA_TYPE = "Img"
-COLOR_MODE = "grayscale"
+DATA_TYPE: str = "Img"
+COLOR_MODE: str = "grayscale"
 
 
 def augment_data(dataset: Any, image_shape: (int, int, int)) -> Any:
@@ -124,11 +124,12 @@ def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str
         Any modelo resultante.
     """
     return Sequential([
-        layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1, input_shape=input_shape),    # Normalization
+        layers.Input(shape=input_shape),
+        layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1),    # Normalization
         layers.Conv2D(4, kernel_size=3, strides=2, activation=tf.nn.relu6),
         layers.BatchNormalization(),
         layers.ReLU(),
-        layers.Conv2D(8, kernel_size=3, strides=1, activation=tf.nn.relu6),
+        layers.Conv2D(8, kernel_size=3, strides=1, padding="same", activation=tf.nn.relu6),
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.ZeroPadding2D(),
@@ -146,7 +147,7 @@ def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.ZeroPadding2D(),
-        layers.Conv2D(64, kernel_size=2, strides=2, padding="same", activation=tf.nn.relu6),
+        layers.Conv2D(64, kernel_size=2, strides=2, activation=tf.nn.relu6),
         layers.BatchNormalization(),
         layers.ReLU(),
         layers.Conv2D(64, kernel_size=1, strides=1, padding="same", activation=tf.nn.relu6),

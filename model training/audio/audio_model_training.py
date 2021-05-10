@@ -13,25 +13,25 @@ import tensorflow_io as tfio
 # Definimos algunas constantes
 
 # Origen de los datos
-MICRO = 0
-EXT = 1
+MICRO: int = 0
+EXT: int = 1
 
 # Tamaño de bloque de muestras.
-BATCH_SIZE = 32
+BATCH_SIZE: int = 32
 
 # Seed asociada al entrenamiento.
-SEED = 135209
+SEED: int = 135209
 
 # Tipo de datos
-DATA_TYPE = "Audio"
-SAMPLE_RATE = 16000     # Hz
-FRAME_LENGTH = 255
-FRAME_STEP = 128
+DATA_TYPE: str = "Audio"
+SAMPLE_RATE: int = 16000     # Hz
+FRAME_LENGTH: int = 255
+FRAME_STEP: int = 128
 
 # Ajuste de los datasets
 AUTOTUNE = tf.data.AUTOTUNE
-CLASS_NAMES = ["no", "silence", "unknown", "yes"]
-NCLASSES = len(CLASS_NAMES)
+CLASS_NAMES: List[str] = ["no", "silence", "unknown", "yes"]
+NCLASSES: int = len(CLASS_NAMES)
 
 
 def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram_example=False,
