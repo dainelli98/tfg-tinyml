@@ -30,7 +30,7 @@ FRAME_STEP: int = 128
 
 # Ajuste de los datasets
 AUTOTUNE = tf.data.AUTOTUNE
-CLASS_NAMES: List[str] = ["no", "silence", "unknown", "yes"]
+CLASS_NAMES: [str] = ["no", "silence", "unknown", "yes"]
 NCLASSES: int = len(CLASS_NAMES)
 
 
