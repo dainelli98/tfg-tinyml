@@ -43,7 +43,7 @@ def augment_data(dataset: Any, image_shape: (int, int, int)) -> Any:
     data_augmentation = Sequential([
         layers.experimental.preprocessing.RandomFlip("horizontal", input_shape=image_shape),
         layers.experimental.preprocessing.RandomRotation(0.05),
-        layers.experimental.preprocessing.RandomZoom(0.05)
+        layers.experimental.preprocessing.RandomZoom(0.1)
     ])
     augmented_dataset = dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
     augmented_dataset = augmented_dataset.shuffle(1000, seed=SEED)
