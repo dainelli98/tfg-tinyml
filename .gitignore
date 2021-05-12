@@ -130,6 +130,3 @@ dmypy.json
 
 # sample folder
 samples/
-
-# saved models folder
-saved models/

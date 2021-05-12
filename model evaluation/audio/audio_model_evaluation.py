@@ -31,7 +31,7 @@ def get_test_dataset(data_dir: str) -> Any:
 
     nsamples = len(filenames)
 
-    print(f"Se usarán {nsamples} muestras.")
+    print(f"Using {nsamples} samples.")
 
     test_dataset = preprocess_dataset(filenames, batch=False)
 
@@ -101,6 +101,7 @@ def test_audio(model: Any, test_dir: str, class_names: List[str]):
         test_dir:       str path al directorio que contiene las muestras de audio.
         class_names:    List[str] con los nombres de las clases a predecir.
     """
+    print(f'Testing model with files located in "{test_dir}".')
     test_audios, test_labels = get_audios_and_labels(test_dir)
     predictions = np.argmax(model.predict(test_audios), axis=1)
     show_test_results(test_labels, predictions, class_names)
