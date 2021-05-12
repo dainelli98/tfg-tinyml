@@ -12,6 +12,9 @@ import seaborn as sns
 from audio_model_training import preprocess_dataset, SEED
 
 
+DIGITS: int = 5
+
+
 def get_test_dataset(data_dir: str) -> Any:
     """
     Crea un dataset con los audios de test alojados en data_dir.
@@ -90,7 +93,7 @@ def show_test_results(true_labels: List[int], predictions: List[int], class_name
     plt.ylabel('Label')
     plt.title("Confusion matrix")
     plt.show()
-    print(classification_report(true_labels, predictions, target_names=class_names))
+    print(classification_report(true_labels, predictions, target_names=class_names, digits=DIGITS))
 
 
 def test_audio(model: Any, test_dir: str, class_names: List[str]):

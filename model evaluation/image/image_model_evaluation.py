@@ -12,6 +12,9 @@ import seaborn as sns
 from image_model_training import COLOR_MODE
 
 
+DIGITS: int = 5
+
+
 def create_class_indexes(class_names: List[str]) -> Dict[str, int]:
     """
     Crea un diccionario que relaciona nombres de clases con su label.
@@ -178,7 +181,7 @@ def show_test_results(true_labels: List[int], predictions: List[int], class_name
     plt.ylabel('Label')
     plt.title("Confusion matrix")
     plt.show()
-    print(classification_report(true_labels, predictions, target_names=class_names))
+    print(classification_report(true_labels, predictions, target_names=class_names, digits=DIGITS))
 
 
 def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: [str], show_interval=0):
