@@ -112,7 +112,7 @@ def demo_image_dataset(dataset: Any, class_names=None):
             ax.axis("off")
 
 
-def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str):
+def get_image_model(nclasses: int, model_name: str):
     """
     Genera un modelo simple de imagen con el input shape y el número de clases indicados.
     Args:
@@ -124,7 +124,7 @@ def get_image_model(input_shape: (int, int, int), nclasses: int, model_name: str
         Any modelo resultante.
     """
     return Sequential([
-        layers.Input(shape=input_shape),
+        layers.InputLayer(input_shape=IMG_SHAPE),
         layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1),    # Normalization
         layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
         layers.Conv2D(4, kernel_size=3, strides=2, activation="linear", use_bias=False),
