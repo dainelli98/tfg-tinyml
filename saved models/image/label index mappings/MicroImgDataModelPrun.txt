@@ -1,0 +1,4 @@
+Classes:
+	0: face
+	1: mask
+	2: nothing
