@@ -5,8 +5,8 @@ from typing import Any
 
 # Pruning
 PRUNING_EPOCHS: int = 100
-PRUNABLE_LAYERS = [layers.ZeroPadding2D, layers.Conv2D, layers.BatchNormalization, layers.ReLU, layers.Flatten,
-                   layers.Dense, layers.MaxPooling2D]
+PRUNABLE_LAYERS = [layers.Conv2D, layers.Flatten,
+                   layers.Dense]
 
 PATIENCE: int = 10
 
