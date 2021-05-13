@@ -4,9 +4,8 @@ from tensorflow.keras import layers
 from typing import Any
 
 # Pruning
-PRUNING_EPOCHS: int = 100
-PRUNABLE_LAYERS = [layers.Conv2D, layers.Flatten,
-                   layers.Dense]
+PRUNING_EPOCHS: int = 50
+PRUNABLE_LAYERS = [layers.Conv2D, layers.Flatten, layers.Dense, layers.MaxPooling2D]
 
 PATIENCE: int = 10
 
