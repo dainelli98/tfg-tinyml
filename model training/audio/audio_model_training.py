@@ -274,6 +274,25 @@ def get_spectrogram_sample(waveform: Any, label: str) -> (Any, int):
     return spectrogram, label_id
 
 
+def prepara_data_for_normalization_adapt(dataset: Any) -> Any:
+    """
+    Prepara los datos de un dataset para ser usados para ajustar la normalización de una capa.
+    Args:
+        dataset:    Any dataset del que se extraen los datos.
+
+    Returns:
+        Any datos del dataset listos para ser usados para ajustar una capa de normalización.
+    """
+    data_list = [x for x, _ in list(dataset.as_numpy_iterator())]
+    data = data_list[0]
+    try:
+        for batch in data_list[1:]:
+            data = np.concatenate((data, batch), axis=0)
+    except Exception:
+        print("Dataset only had 1 batch")
+    return data
+
+
 def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset: Any):
     """
     Genera un modelo tiny_conv de audio con el input shape y el número de clases indicados.
@@ -287,10 +306,14 @@ def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset
     """
     # Ajustamos la normalización en base a estadísticas del dataset de entrenamiento.
     normalization_layer = layers.experimental.preprocessing.Normalization()
-    normalization_layer.adapt(train_dataset.map(lambda x, _: x))
+
+    # Hay que obtener los datos en un formato que sirva de input para adapt
+    data = prepara_data_for_normalization_adapt(train_dataset)
+
+    normalization_layer.adapt(data)
 
     return Sequential([
-        layers.Input(shape=input_shape),
+        layers.InputLayer(input_shape=input_shape),
         layers.experimental.preprocessing.Resizing(32, 32),
         normalization_layer,
         layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
