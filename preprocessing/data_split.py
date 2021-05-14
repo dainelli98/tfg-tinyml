@@ -5,7 +5,7 @@ from typing import List
 
 # Constantes
 TRAIN: bool = True
-TEST: bool = False
+TEST: bool = not TRAIN
 
 
 def clean_existing_partition(data_dir: str):
@@ -47,8 +47,8 @@ def prepare_partition_directories(data_dir: str, class_names):
     create_output_directories(data_dir, class_names)
     
 
-def assign_partition(filename: str, data_dir: str, class_name: str, extension: str, test_percentage: float, train_count=0,
-                     test_count=0) -> bool:
+def assign_partition(filename: str, data_dir: str, class_name: str, extension: str, test_percentage: float,
+                     train_samples: int, test_samples: int, train_count=0, test_count=0) -> bool:
     """
     Asigna una muestra a una partición de forma aleatoria. La copia en la carpeta correspondiente.
     Args:
@@ -57,6 +57,8 @@ def assign_partition(filename: str, data_dir: str, class_name: str, extension: s
         class_name:         str con el nombre de la clase de la muestra que se asigna.
         extension:          str con la extensión de los archivos de los datos que se particionan.
         test_percentage:    float con el porcentaje de muestras que deben destinarse a test.
+        train_samples:
+        test_samples:
         train_count:        int con el número de muestras ya asignadas a la partición train.
         test_count:         int con el número de muestras ya asignadas a la partición test.
 
@@ -67,11 +69,9 @@ def assign_partition(filename: str, data_dir: str, class_name: str, extension: s
 
     if test_count >= test_samples or (train_count < train_samples and prob > (test_percentage / 100.)):
         copyfile(f"{data_dir}/{class_name}/{filename}", f"{data_dir}/train/{class_name}/{class_name}{train_count + 1}.{extension}")
-        train_count += 1
         return TRAIN
 
     copyfile(f"{data_dir}/{class_name}/{filename}", f"{data_dir}/test/{class_name}/{class_name}{test_count + 1}.{extension}")
-    test_count += 1
     return TEST
 
 
@@ -106,12 +106,10 @@ def partition_data(data_dir: str, test_percentage: float, extension: str, seed: 
 
             for file in files:
                 
-                assignment = assign_partition(data_dir, name, extension, test_percentage, train_count=train_count,
-                                              test_count=test_count)
+                assignment = assign_partition(file, data_dir, name, extension, test_percentage, train_samples,
+                                              test_samples, train_count=train_count, test_count=test_count)
 
-                prob = rnd.random()
-
-                if assignment = TRAIN
+                if assignment == TRAIN:
                     train_count += 1
                 else:
                     test_count += 1
