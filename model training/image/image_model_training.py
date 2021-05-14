@@ -124,7 +124,7 @@ def get_image_model(nclasses: int, model_name: str):
         Any modelo resultante.
     """
     return Sequential([
-        layers.InputLayer(input_shape=IMG_SHAPE),
+        layers.Input(shape=IMG_SHAPE),
         layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1),    # Normalization
         layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
         layers.Conv2D(4, kernel_size=3, strides=2, activation="linear", use_bias=False),

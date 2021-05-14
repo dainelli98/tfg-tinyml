@@ -290,7 +290,7 @@ def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset
     normalization_layer.adapt(train_dataset.map(lambda x, _: x))
 
     return Sequential([
-        layers.InputLayer(input_shape=input_shape),
+        layers.Input(shape=input_shape),
         layers.experimental.preprocessing.Resizing(32, 32),
         normalization_layer,
         layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
