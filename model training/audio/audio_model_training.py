@@ -35,7 +35,7 @@ NCLASSES: int = len(CLASS_NAMES)
 
 
 def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram_example=False,
-                       show_spectrogram_samples=False, batch=True) -> Any:
+                       show_spectrogram_samples=False, batch=True, prefetch=True) -> Any:
     """
     Args:
         files:                      Any labels y los paths de las muestras de audio.
@@ -44,6 +44,7 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
                                     espectrograma.
         show_spectrogram_samples:   bool que indica si se quiere mostrar ejemplos de los espectrogramas de las muestras.
         batch:                      bool que indica si se aplica batch.
+        prefetch:                   bool que indica si se aplica prefetch.
 
     Returns:
         Any dataset con las labels y las muestras de audio preprocesadas en formato espectrograma.
@@ -65,7 +66,8 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
     if batch:
         spectrogram_dataset = spectrogram_dataset.batch(BATCH_SIZE)
 
-    spectrogram_dataset = spectrogram_dataset.cache().prefetch(AUTOTUNE)
+    if prefetch:
+        spectrogram_dataset = spectrogram_dataset.cache().prefetch(AUTOTUNE)
 
     return spectrogram_dataset
 

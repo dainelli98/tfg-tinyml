@@ -15,14 +15,15 @@ from audio_model_training import preprocess_dataset, SEED
 DIGITS: int = 5
 
 
-def get_test_dataset(data_dir: str) -> Any:
+def get_dataset(data_dir: str, prefetch=True) -> Any:
     """
-    Crea un dataset con los audios de test alojados en data_dir.
+    Crea un dataset con los audios de alojados en data_dir.
     Args:
         data_dir:   str con el path a la carpeta que contiene las muestras de audio de la partición test.
+        prefetch:   bool que indica si se aplica prefetch.
 
     Returns:
-        dataset con los audios y las labels del dataset de test.
+        dataset con los audios y las labels del dataset.
     """
     data_dir = pathlib.Path(data_dir)
     tf.random.set_seed(SEED)
@@ -36,9 +37,9 @@ def get_test_dataset(data_dir: str) -> Any:
 
     print(f"Using {nsamples} samples.")
 
-    test_dataset = preprocess_dataset(filenames, batch=False)
+    dataset = preprocess_dataset(filenames, batch=False, prefetch=prefetch)
 
-    return test_dataset
+    return dataset
 
 
 def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: [str]):
@@ -57,16 +58,16 @@ def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dir
         test_audio(model, test_dir, class_names)
 
 
-def get_audios_and_labels(test_dir: str) -> (List[Any], List[int]):
+def get_audios_and_labels(data_dir: str) -> (List[Any], List[int]):
     """
-    Obtiene los audios y labels para test de un directorio.
+    Obtiene los audios y labels de un directorio.
     Args:
-        test_dir:   str path al directorio que contiene los audios.
+        data_dir:   str path al directorio que contiene los audios.
 
     Returns:
         List[Any], List[int] con los audios y las labels.
     """
-    test_dataset = get_test_dataset(test_dir)
+    test_dataset = get_dataset(data_dir)
     test_audios = []
     test_labels = []
     for audio, label in test_dataset:

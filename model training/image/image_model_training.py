@@ -116,7 +116,6 @@ def get_image_model(nclasses: int, model_name: str):
     """
     Genera un modelo simple de imagen con el input shape y el número de clases indicados.
     Args:
-        input_shape:    (int, int, int) con las dimensiones de las imágenes que ha de clasificar el modelo.
         nclasses:       int con el número de classes distintas presentes en las imágenes.
         model_name:     str con el nombre que se asigna al modelo.
 
