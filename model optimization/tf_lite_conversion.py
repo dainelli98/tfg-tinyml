@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image_dataset_from_directory
 from typing import Any
 
-from image_model_training import COLOR_MODE, SEED, IMG_SIZE, BATCH_SIZE, AUTOTUNE
+from image_model_training import COLOR_MODE, SEED, IMG_SIZE, normalize_dataset
 from audio_model_evaluation import get_dataset as get_audio_dataset
 
 
@@ -37,11 +37,12 @@ def convert_saved_model(model_name: str, model_dir: str,  output_dir: str, quant
     print(f"Model converted. The model has been saved in {output_path}.")
 
 
-def get_image_representative_dataset(data_dir: str) -> Any:
+def get_image_representative_dataset(data_dir: str, normalize=False) -> Any:
     """
     Genera un dataset representativo de imágenes a partir de los datos alojados en data_dir.
     Args:
         data_dir:   str path del directorio donde se alojan las imágenes que se quieren usar para crear el dataset
+        normalize:  bool que indica si normalizar los datos.
 
     Returns:
         Any dataset que se ha generado con los datos del directorio indicado.
@@ -49,10 +50,13 @@ def get_image_representative_dataset(data_dir: str) -> Any:
     dataset = image_dataset_from_directory(data_dir, seed=SEED, image_size=IMG_SIZE, batch_size=100,
                                            color_mode=COLOR_MODE)
 
+    if normalize:
+        normalize_dataset(dataset)
+
     def representative_dataset():
         for data, _ in dataset.batch(1).take(100):
-            print(data)
-            yield [tf.dtypes.cast(data, tf.float32)]
+            for sample in data:
+                yield [tf.dtypes.cast(sample, tf.float32)]
 
     return representative_dataset
 

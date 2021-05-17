@@ -295,32 +295,46 @@ def prepara_data_for_normalization_adapt(dataset: Any) -> Any:
     return data
 
 
-def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset: Any):
+def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset: Any, normalize=True):
     """
     Genera un modelo tiny_conv de audio con el input shape y el número de clases indicados.
     Args:
         input_shape:    (int, int, int) el input shape de los datos.
         model_name:     str con el nombre que se asigna al modelo.
         train_dataset:  Any con el dataset que contiene las muestras de entrenamiento.
+        normalize:      bool que indica si se añade una capa de normalización.
 
     Returns:
         Any modelo resultante.
     """
-    # Ajustamos la normalización en base a estadísticas del dataset de entrenamiento.
-    normalization_layer = layers.experimental.preprocessing.Normalization()
+    if normalize:
+        # Ajustamos la normalización en base a estadísticas del dataset de entrenamiento.
+        normalization_layer = layers.experimental.preprocessing.Normalization()
 
-    # Hay que obtener los datos en un formato que sirva de input para adapt
-    data = prepara_data_for_normalization_adapt(train_dataset)
+        # Hay que obtener los datos en un formato que sirva de input para adapt
+        data = prepara_data_for_normalization_adapt(train_dataset)
 
-    normalization_layer.adapt(data)
+        normalization_layer.adapt(data)
 
-    return Sequential([
-        layers.InputLayer(input_shape=input_shape),
-        layers.experimental.preprocessing.Resizing(32, 32),
-        normalization_layer,
-        layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
-        layers.MaxPooling2D(),
-        layers.Dropout(0.25),
-        layers.Flatten(),
-        layers.Dense(NCLASSES)
-    ], name=model_name)
+        capas = [
+            layers.InputLayer(input_shape=input_shape),
+            layers.experimental.preprocessing.Resizing(32, 32),
+            normalization_layer,
+            layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
+            layers.MaxPooling2D(),
+            layers.Dropout(0.25),
+            layers.Flatten(),
+            layers.Dense(NCLASSES)
+        ]
+
+    else:
+        capas = [
+            layers.InputLayer(input_shape=input_shape),
+            layers.Conv2D(8, (8, 10), strides=(2, 2), activation="relu"),
+            layers.MaxPooling2D(),
+            layers.Dropout(0.25),
+            layers.Flatten(),
+            layers.Dense(NCLASSES)
+        ]
+
+    return Sequential(capas, name=model_name)

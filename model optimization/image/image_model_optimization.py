@@ -7,8 +7,11 @@ from typing import Any
 PRUNING_EPOCHS: int = 100
 PRUNABLE_LAYERS = [layers.ZeroPadding2D, layers.Conv2D, layers.BatchNormalization, layers.ReLU, layers.Flatten,
                    layers.Dense, layers.MaxPooling2D]
+PRUN_PATIENCE: int = 10
 
-PATIENCE: int = 10
+# Qunatization aware training
+QUANT_EPOCHS: int = 500
+QUANT_PATIENCE: int = 50
 
 
 def apply_pruning(model: Any) -> Any:

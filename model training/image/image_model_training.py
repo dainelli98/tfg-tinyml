@@ -112,49 +112,89 @@ def demo_image_dataset(dataset: Any, class_names=None):
             ax.axis("off")
 
 
-def get_image_model(nclasses: int, model_name: str):
+def get_image_model(nclasses: int, model_name: str, normalization_layer=True):
     """
     Genera un modelo simple de imagen con el input shape y el número de clases indicados.
     Args:
-        nclasses:       int con el número de classes distintas presentes en las imágenes.
-        model_name:     str con el nombre que se asigna al modelo.
+        nclasses:           int con el número de classes distintas presentes en las imágenes.
+        model_name:         str con el nombre que se asigna al modelo.
+        normalization_layer bool que indica si se debe añadir una capa de normalización.
 
     Returns:
         Any modelo resultante.
     """
-    return Sequential([
-        layers.InputLayer(input_shape=IMG_SHAPE),
-        layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1),    # Normalization
-        layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
-        layers.Conv2D(4, kernel_size=3, strides=2, activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.Conv2D(8, kernel_size=3, strides=1, padding="same", activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
-        layers.Conv2D(16, kernel_size=3, strides=2, activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.Conv2D(16, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
-        layers.Conv2D(32, kernel_size=3, strides=2, activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.Conv2D(32, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
-        layers.Conv2D(64, kernel_size=3, strides=2, activation="linear", use_bias=False),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.Conv2D(64, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=True),
-        layers.BatchNormalization(),
-        layers.ReLU(max_value=6),
-        layers.MaxPooling2D(),
-        layers.Dropout(0.2),
-        layers.Flatten(),
-        layers.Dense(nclasses)
-    ], name=model_name)
+    if normalization_layer:
+        capas = [
+            layers.InputLayer(input_shape=IMG_SHAPE),
+            layers.experimental.preprocessing.Rescaling(1. / 127.5, offset=-1),    # Normalization
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(4, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(8, kernel_size=3, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(16, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(16, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(32, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(32, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(64, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(64, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=True),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.MaxPooling2D(),
+            layers.Dropout(0.2),
+            layers.Flatten(),
+            layers.Dense(nclasses)
+        ]
+    else:
+        capas = [
+            layers.InputLayer(input_shape=IMG_SHAPE),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(4, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(8, kernel_size=3, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(16, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(16, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(32, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(32, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.ZeroPadding2D(padding=((0, 1), (0, 1))),
+            layers.Conv2D(64, kernel_size=3, strides=2, activation="linear", use_bias=False),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.Conv2D(64, kernel_size=1, strides=1, padding="same", activation="linear", use_bias=True),
+            layers.BatchNormalization(),
+            layers.ReLU(max_value=6),
+            layers.MaxPooling2D(),
+            layers.Dropout(0.2),
+            layers.Flatten(),
+            layers.Dense(nclasses)
+        ]
+
+    return Sequential(capas, name=model_name)
