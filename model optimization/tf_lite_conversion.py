@@ -20,7 +20,10 @@ def convert_saved_model(model_name: str, model_dir: str,  output_dir: str, quant
 
     if quantize:
         print(f"Applying quantization to {model_name}.")
-        output_path = f"{output_dir}/{model_name}Quant.tflite"
+        if model_name[-3:] != "QAT":
+            output_path = f"{output_dir}/{model_name}Quant.tflite"
+        else:
+            output_path = f"{output_dir}/{model_name}.tflite"
         converter.optimizations = [tf.lite.Optimize.DEFAULT]
         converter.representative_dataset = representative_dataset
         converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
@@ -54,6 +57,12 @@ def get_image_representative_dataset(data_dir: str, normalize=False) -> Any:
         normalize_dataset(dataset)
 
     def representative_dataset():
+        """
+        Función generadora de los datos del dataset.
+
+        Returns:
+            Muestra del dataset.
+        """
         for data, _ in dataset.batch(1).take(100):
             for sample in data:
                 yield [tf.dtypes.cast(sample, tf.float32)]
@@ -73,6 +82,12 @@ def get_audio_representative_dataset(data_dir: str) -> Any:
     dataset = get_audio_dataset(data_dir, prefetch=False)
 
     def representative_dataset():
+        """
+        Función generadora de los datos del dataset.
+
+        Returns:
+            Muestra del dataset.
+        """
         for data, _ in dataset.batch(1).take(100):
             yield [tf.dtypes.cast(data, tf.float32)]
 

@@ -67,7 +67,7 @@ def present_img(img: Any, predicted_class: int, true_label: int, prediction_scor
     plt.imshow(img, cmap='gray', vmin=0, vmax=255)
     plt.text(2, 15,
              f"Image class: {class_names[true_label]}\nPredicted class: {class_names[predicted_class]}"
-             f"\nPrediction confidence {(prediction_score * 100.).round(2)}%", color="black",
+             f"\nPrediction confidence: {(prediction_score * 100.).round(2)}%", color="black",
              bbox=dict(facecolor=text_color, alpha=0.8))
     plt.show()
 
