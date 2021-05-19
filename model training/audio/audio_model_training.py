@@ -9,7 +9,9 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras import layers
 import pathlib
 import tensorflow_io as tfio
-
+from librosa.feature import melspectrogram
+from librosa.core import power_to_db
+from matplotlib import cm
 # Definimos algunas constantes
 
 # Origen de los datos
@@ -25,8 +27,10 @@ SEED: int = 135209
 # Tipo de datos
 DATA_TYPE: str = "Audio"
 SAMPLE_RATE: int = 16000     # Hz
-FRAME_LENGTH: int = 255
-FRAME_STEP: int = 128
+N_FFT: int = 512
+HOP_LENGTH: int = 320
+WINDOW_LENGTH: int = 480
+N_MELS: int = 40
 
 # Ajuste de los datasets
 AUTOTUNE = tf.data.AUTOTUNE
@@ -58,7 +62,28 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
     if show_spectrogram_example:
         show_spectrogram(waveform_dataset)
 
-    spectrogram_dataset = waveform_dataset.map(get_spectrogram_sample, num_parallel_calls=AUTOTUNE)
+    spectrogram_dataset = waveform_dataset.map(lambda waveform, class_name: tf.py_function(func=get_spectrogram_sample,
+                                                                                           inp=[waveform, class_name],
+
+                                                                                           Tout=[tf.float32, tf.int64]))
+
+    def set_spectrogram_shape(data: Any, label: int) -> (Any, int):
+        """
+        Ajusta las shapes de los datasets después de usar py_function.
+        Args:
+            data:   Any con los datos de espectrograma.
+            label:  int con la label de los datos.
+
+        Returns:
+            (Any, int) con los datos con la shape correcta.
+        """
+        data.set_shape([40, 49, 1])
+        label.set_shape([])
+        return data, label
+
+    spectrogram_dataset = spectrogram_dataset.map(set_spectrogram_shape, num_parallel_calls=AUTOTUNE)
+
+    print(spectrogram_dataset)
 
     if show_spectrogram_samples:
         show_spectrograms(spectrogram_dataset)
@@ -122,12 +147,8 @@ def plot_spectrogram(spectrogram: Any, ax: Any):
         spectrogram:    Any espectrograma que se quiere mostrar.
         ax:             Any ax donde se quiere mostrar el espectrograma.
     """
-    log_spec = np.log(spectrogram.T)
-    height = log_spec.shape[0]
-    width = log_spec.shape[1]
-    x = np.linspace(0, np.size(spectrogram), num=width, dtype=int)
-    y = range(height)
-    ax.pcolormesh(x, y, log_spec)
+    ax.imshow(np.swapaxes(spectrogram, 0, 1), interpolation='nearest', cmap=cm.viridis, origin='lower',
+              aspect='auto')
 
 
 def show_spectrogram(dataset: Any):
@@ -151,7 +172,7 @@ def show_spectrogram(dataset: Any):
     axes[0].plot(timescale, waveform.numpy())
     axes[0].set_title('Waveform')
     axes[0].set_xlim([0, 16000])
-    plot_spectrogram(spectrogram.numpy(), axes[1])
+    plot_spectrogram(spectrogram, axes[1])
     axes[1].set_title('Spectrogram')
     plt.show()
 
@@ -193,7 +214,7 @@ def show_spectrograms(dataset: Any, rows=3, cols=3):
         r = i // cols
         c = i % cols
         ax = axes[r][c]
-        plot_spectrogram(np.squeeze(spectrogram.numpy()), ax)
+        plot_spectrogram(np.squeeze(spectrogram), ax)
         ax.set_title(CLASS_NAMES[label_id.numpy()])
         ax.axis('off')
     plt.show()
@@ -254,8 +275,10 @@ def get_spectrogram(waveform: Any) -> Any:
     zero_padding = tf.zeros([16000] - tf.shape(waveform), dtype=tf.float32)
     waveform = tf.cast(waveform, tf.float32)
     equal_length = tf.concat([waveform, zero_padding], 0)
-    spectrogram = tf.signal.stft(equal_length, frame_length=FRAME_LENGTH, frame_step=FRAME_STEP)
-    spectrogram = tf.abs(spectrogram)
+
+    spectrogram = melspectrogram(equal_length.numpy(), sr=SAMPLE_RATE, n_fft=N_FFT, hop_length=HOP_LENGTH,
+                                 win_length=WINDOW_LENGTH, center=False, n_mels=40)
+    spectrogram = power_to_db(spectrogram, ref=np.max)
     return spectrogram
 
 
@@ -285,7 +308,7 @@ def prepara_data_for_normalization_adapt(dataset: Any) -> Any:
     Returns:
         Any datos del dataset listos para ser usados para ajustar una capa de normalización.
     """
-    data_list = [x for x, _ in list(dataset.as_numpy_iterator())]
+    data_list = [x for x, y in list(dataset.as_numpy_iterator())]
     data = data_list[0]
     try:
         for batch in data_list[1:]:
@@ -318,7 +341,6 @@ def get_audio_model(input_shape: (int, int, int), model_name: str, train_dataset
 
         capas = [
             layers.InputLayer(input_shape=input_shape),
-            layers.experimental.preprocessing.Resizing(32, 32),
             normalization_layer,
             layers.Conv2D(8, (8, 10), strides=(2, 2), activation=tf.nn.relu6),
             layers.MaxPooling2D(),
