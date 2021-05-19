@@ -12,6 +12,7 @@ import tensorflow_io as tfio
 from librosa.feature import melspectrogram
 from librosa.core import power_to_db
 from matplotlib import cm
+
 # Definimos algunas constantes
 
 # Origen de los datos
@@ -82,8 +83,6 @@ def preprocess_dataset(files: Any, show_waveform_samples=False, show_spectrogram
         return data, label
 
     spectrogram_dataset = spectrogram_dataset.map(set_spectrogram_shape, num_parallel_calls=AUTOTUNE)
-
-    print(spectrogram_dataset)
 
     if show_spectrogram_samples:
         show_spectrograms(spectrogram_dataset)

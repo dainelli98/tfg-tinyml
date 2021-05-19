@@ -1,5 +1,0 @@
-Classes:
-	0: no
-	1: silence
-	2: unknown
-	3: yes
