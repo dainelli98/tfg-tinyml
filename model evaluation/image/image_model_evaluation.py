@@ -12,6 +12,10 @@ import seaborn as sns
 from image_model_training import COLOR_MODE
 
 
+MICRO: int = 0
+EXT: int = 1
+PRUN: int = 2
+
 DIGITS: int = 5
 
 
