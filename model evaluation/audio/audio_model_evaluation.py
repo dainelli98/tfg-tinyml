@@ -48,6 +48,15 @@ def get_dataset(data_dir: str, prefetch=True) -> Any:
 
 
 def tensorflow_lite_model_evaluation(model_path: str, test_dirs: List[str], class_names_path: str, quantized=False):
+    """
+    Comprueba el rendimiento de un modelo TensorFlow Lite.
+    Args:
+        model_path:         str con el path de la carpeta que guarda el modelo de TensorFlow que se usará para el test.
+        test_dirs:          List[str] con los paths de los directorios con las imágenes que se usarán para sucesivos
+        class_names_path:   str con el path del archivo que guarda la lista de los nombres de las clases del modelo.
+                            tests.
+        quantized:          bool que indica si el modelo está cuantizado.
+    """
     interpreter = tf.lite.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
 
@@ -61,10 +70,20 @@ def tensorflow_lite_model_evaluation(model_path: str, test_dirs: List[str], clas
         tensorflow_lite_test_audio(interpreter, test_dir, class_names, quantized=quantized)
 
     if quantized:
-        print("Quantized models perform slower as they are intended to work on ARM devices.")
+        print("Quantized models can perform slower as they are intended to work on ARM devices.")
     
 
-def tensorflow_lite_predict(interpreter, test_dataset, quantized=False):
+def tensorflow_lite_predict(interpreter: Any, test_dataset: Any, quantized=False):
+    """
+    Realiza las predicciones con un modelo TensorFlow Lite.
+    Args:
+        interpreter:    Any interpreter usado para las predicciones.
+        test_dataset:   Any dataset usado para el test.
+        quantized:      bool que indica si el modelo está cuantizado.
+
+    Returns:
+
+    """
     input_details = interpreter.get_input_details()[0]
     output_details = interpreter.get_output_details()[0]
 
@@ -97,6 +116,17 @@ def tensorflow_lite_predict(interpreter, test_dataset, quantized=False):
 
 
 def tensorflow_lite_test_audio(interpreter: Any, test_dir: str, class_names, quantized=False):
+    """
+    Realiza un test de audio con un modelo en los archivos situados en test_dir.
+    Args:
+        interpreter:    Any interpreter usado para el test.
+        test_dir:       str con el path del directorio con los datos de test.
+        class_names:    List[str] con los nombres de las clases.
+        quantized:      bool que indica si el modelo está cuantizado.
+
+    Returns:
+
+    """
 
     test_dataset = get_dataset(test_dir, prefetch=False)
     test_dataset = test_dataset.as_numpy_iterator()

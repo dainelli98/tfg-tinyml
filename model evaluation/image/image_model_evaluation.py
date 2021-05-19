@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 import seaborn as sns
+import time
 
 from image_model_training import COLOR_MODE
 
@@ -159,9 +160,7 @@ def test_images(model: Any, test_dir: str, class_names: List[str], show_interval
     predictions = []
     true_labels = []
 
-    classes = os.listdir(test_dir)
-
-    for name in classes:
+    for name in class_names:
         class_dir = f"{test_dir}/{name}"
         true_labels, predictions = test_class(class_dir, name, class_indexes[name], class_names, model, true_labels,
                                               predictions, show_interval)
@@ -188,7 +187,7 @@ def show_test_results(true_labels: List[int], predictions: List[int], class_name
     print(classification_report(true_labels, predictions, target_names=class_names, digits=DIGITS))
 
 
-def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: [str], show_interval=0):
+def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: List[str], show_interval=0):
     """
     Comprueba el rendimiento de un modelo TensorFlow de imagen.
     Args:
@@ -204,3 +203,131 @@ def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dir
     print(f'Testing model located in "{model_path}".')
     for test_dir in test_dirs:
         test_images(model, test_dir, class_names, show_interval=show_interval)
+
+
+def tensorflow_lite_model_evaluation(model_path: str, class_names_path: str, test_dirs: List[str], quantized=False):
+    """
+    Comprueba el rendimiento de un modelo TensorFlow Lite.
+    Args:
+        model_path:         str con el path de la carpeta que guarda el modelo de TensorFlow que se usará para el test.
+        test_dirs:          List[str] con los paths de los directorios con las imágenes que se usarán para sucesivos
+        class_names_path:   str con el path del archivo que guarda la lista de los nombres de las clases del modelo.
+                            tests.
+        quantized:          bool que indica si el modelo está cuantizado.
+    """
+    interpreter = tf.lite.Interpreter(model_path=model_path)
+    interpreter.allocate_tensors()
+
+    print(f'Testing model located in "{model_path}".')
+
+    print(f"Model size {os.path.getsize(model_path) / 1024} Kb")
+
+    class_names = load(class_names_path)
+
+    for test_dir in test_dirs:
+        tensorflow_lite_test_image(interpreter, class_names, test_dir)
+
+    if quantized:
+        print("Quantized models can perform slower as they are intended to work on ARM devices.")
+
+
+def tensorflow_lite_test_image(interpreter: Any, class_names: List[str], test_dir: str):
+    """
+    Hace un test sobre un conjunto de imágenes usando el modelo indicado y muestra un resumen de los resultados.
+    Args:
+        interpreter:    Any el interpreter de TensorFlow que se usará para el test.
+        class_names:    List[str] con los nombres de las clases del modelo.
+        test_dir:       str con el path donde se encuentran las imágenes que se usarán para el test.
+        quantized:      bool que indica si el modelo está cuantizado.
+    """
+    class_indexes = create_class_indexes(class_names)
+
+    print(f'Testing model with files located in "{test_dir}".')
+
+    predictions = []
+    true_labels = []
+    times = []
+
+    for name in class_names:
+        class_dir = f"{test_dir}/{name}"
+        true_labels, predictions, times = tensorflow_lite_test_class(class_dir, name, class_indexes[name], interpreter,
+                                                                     true_labels, predictions, times)
+
+    show_test_results(true_labels, predictions, class_names)
+    time_summary(times)
+
+
+def time_summary(times: List[float]):
+    """
+    Hace un resumen a partir de los tiempos de inferencia de un test.
+    Args:
+        times:  List[float] con los tiempos de inferencia.
+    """
+    avg_time = sum(times) / len(times)
+    max_time = max(times)
+    min_time = min(times)
+
+    print(f"Average time: {avg_time} ms\nMax time: {max_time} ms\nMin time: {min_time} ms")
+
+
+def tensorflow_lite_test_class(class_dir: str, class_name: str, class_index: int, interpreter: Any, true_labels=None,
+                               predictions=None, times=None):
+    """
+    Realiza predicciones sobre un conjunto de imágenes pertenecientes a una misma clase.
+    Args:
+        class_dir:      str con el path del directorio que contiene las imágenes de la clase.
+        class_name:     str con el nombre de la clase.
+        class_index:    int índice asociado a la clase.
+        interpreter:    Any interpreter que se usa para realizar las predicciones.
+        true_labels:    List[int] con las labels de predicciones anteriores.
+        predictions:    List[int] con las predicciones anteriores.
+        times:          List[float] con los tiempos anteriores.
+
+    Returns:
+        (List[int], List[int]) con las predicciones y las labels correspondientes.
+    """
+    if not true_labels:
+        true_labels = []
+    if not predictions:
+        predictions = []
+
+    files = os.listdir(class_dir)
+    print(f"Testing {len(files)} images from class {class_name}.")
+
+    for file in files:
+        filepath = f"{class_dir}/{file}"
+        true_labels.append(class_index)
+        predicted_class, elapsed = tensorflow_lite_test_file(filepath, interpreter)
+        predictions.append(predicted_class)
+        times.append(elapsed)
+
+    return true_labels, predictions, times
+
+
+def tensorflow_lite_test_file(filepath: str, interpreter: Any) -> (int, float):
+    """
+    Realiza una predicción sobre un archivo.
+    Args:
+        filepath:       str con el path del archivo que contiene la imagen que se predice.
+        interpreter:    Any interpreter que se usa para realizar las predicciones.
+
+    Returns:
+        (int, float) con la predicción y el tiempo empleado.
+    """
+    input_details = interpreter.get_input_details()[0]
+    output_details = interpreter.get_output_details()[0]
+
+    img = load_img(filepath, color_mode=COLOR_MODE)
+    img_array = img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0).astype(input_details["dtype"])
+
+    interpreter.set_tensor(input_details["index"], img_array)
+    t_ini = time.time()
+    interpreter.invoke()
+    t_end = time.time()
+    elapsed = (t_end - t_ini) * 1000  # ms
+
+    prediction = interpreter.get_tensor(output_details["index"])[0]
+    predicted_class = prediction.argmax()
+
+    return predicted_class, elapsed
