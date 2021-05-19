@@ -8,6 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 import seaborn as sns
+import time
+import os
 
 from audio_model_training import preprocess_dataset, SEED
 
@@ -42,7 +44,72 @@ def get_dataset(data_dir: str, prefetch=True) -> Any:
     return dataset
 
 
-def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: [str]):
+def tensorflow_lite_model_evaluation(model_path: str, test_dirs: List[str], class_names_path: str, quantized=False):
+    interpreter = tf.lite.Interpreter(model_path=model_path)
+    interpreter.allocate_tensors()
+
+    print(f'Testing model located in "{model_path}".')
+
+    print(f"Model size {os.path.getsize(model_path) / 1024} Kb")
+
+    class_names = load(class_names_path)
+
+    for test_dir in test_dirs:
+        tensorflow_lite_test_audio(interpreter, test_dir, class_names, quantized=quantized)
+
+    if quantized:
+        print("Quantized models perform slower as they are intended to work on ARM devices.")
+    
+
+def tensorflow_lite_predict(interpreter, test_dataset, quantized=False):
+    input_details = interpreter.get_input_details()[0]
+    output_details = interpreter.get_output_details()[0]
+
+    predictions = []
+    true_labels = []
+    times = []
+
+    for spectrogram, label in test_dataset:
+        true_labels.append(label)
+
+        if quantized:
+            input_scale, input_zero_point = input_details["quantization"]
+            spectrogram = spectrogram / input_scale + input_zero_point
+        spectrogram = np.expand_dims(spectrogram, axis=0).astype(input_details["dtype"])
+
+        interpreter.set_tensor(input_details["index"], spectrogram)
+
+        t_ini = time.time()
+        interpreter.invoke()
+        t_end = time.time()
+        elapsed = (t_end - t_ini) * 1000  # ms
+        times.append(elapsed)
+
+        prediction = interpreter.get_tensor(output_details["index"])[0]
+
+        predicted_class = prediction.argmax()
+        predictions.append(predicted_class)
+
+    return predictions, true_labels, times
+
+
+def tensorflow_lite_test_audio(interpreter: Any, test_dir: str, class_names, quantized=False):
+
+    test_dataset = get_dataset(test_dir, prefetch=False)
+    test_dataset = test_dataset.as_numpy_iterator()
+
+    predictions, true_labels, times = tensorflow_lite_predict(interpreter, test_dataset, quantized=quantized)
+
+    show_test_results(true_labels, predictions, class_names)
+
+    avg_time = sum(times) / len(times)
+    max_time = max(times)
+    min_time = min(times)
+
+    print(f"Average time: {avg_time} ms\nMax time: {max_time} ms\nMin time: {min_time} ms")
+
+
+def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dirs: List[str]):
     """
     Comprueba el rendimiento de un modelo TensorFlow de audio.
     Args:
@@ -55,7 +122,7 @@ def tensorflow_model_evaluation(model_path: str, class_names_path: str, test_dir
     class_names = load(class_names_path)
     print(f'Testing model located in "{model_path}".')
     for test_dir in test_dirs:
-        test_audio(model, test_dir, class_names)
+        tensorflow_test_audio(model, test_dir, class_names)
 
 
 def get_audios_and_labels(data_dir: str) -> (List[Any], List[int]):
@@ -97,7 +164,7 @@ def show_test_results(true_labels: List[int], predictions: List[int], class_name
     print(classification_report(true_labels, predictions, target_names=class_names, digits=DIGITS))
 
 
-def test_audio(model: Any, test_dir: str, class_names: List[str]):
+def tensorflow_test_audio(model: Any, test_dir: str, class_names: List[str]):
     """
     Realiza un test de predicción sobre los datos de un directorio.
     Args:
