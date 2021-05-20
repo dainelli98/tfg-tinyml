@@ -12,7 +12,7 @@ PRUNING_PATIENCE: int = 10
 
 # Quantization
 QUANT_EPOCHS: int = 250
-QUANT_PATIENCE: int = 20
+QUANT_PATIENCE: int = 250
 
 
 def apply_pruning(model: Any) -> Any:

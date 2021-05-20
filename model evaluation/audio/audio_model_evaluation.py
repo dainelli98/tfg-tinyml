@@ -16,6 +16,7 @@ from audio_model_training import preprocess_dataset, SEED
 MICRO: int = 0
 EXT: int = 1
 PRUN: int = 2
+QAT: int = 3
 
 DIGITS: int = 5
 

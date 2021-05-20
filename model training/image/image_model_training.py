@@ -116,9 +116,9 @@ def get_image_model(nclasses: int, model_name: str, normalization_layer=True):
     """
     Genera un modelo simple de imagen con el input shape y el número de clases indicados.
     Args:
-        nclasses:           int con el número de classes distintas presentes en las imágenes.
-        model_name:         str con el nombre que se asigna al modelo.
-        normalization_layer bool que indica si se debe añadir una capa de normalización.
+        nclasses:               int con el número de classes distintas presentes en las imágenes.
+        model_name:             str con el nombre que se asigna al modelo.
+        normalization_layer:    bool que indica si se debe añadir una capa de normalización.
 
     Returns:
         Any modelo resultante.
