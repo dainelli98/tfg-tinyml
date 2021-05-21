@@ -82,11 +82,11 @@ def get_image_datasets(data_dir: str, validation_percentage: float, shuffle=True
         (Any, Any, Any) con los 2 datasets de imágenes de entrenamiento y validación.
     """
     train_dataset = image_dataset_from_directory(data_dir, validation_split=(validation_percentage / 100.),
-                                                 shuffle=True, subset="training", seed=SEED, image_size=IMG_SIZE,
+                                                 shuffle=shuffle, subset="training", seed=SEED, image_size=IMG_SIZE,
                                                  batch_size=BATCH_SIZE, color_mode=COLOR_MODE)
 
     validation_dataset = image_dataset_from_directory(data_dir, validation_split=(validation_percentage / 100.),
-                                                      shuffle=True, subset="validation", seed=SEED, image_size=IMG_SIZE,
+                                                      shuffle=shuffle, subset="validation", seed=SEED, image_size=IMG_SIZE,
                                                       batch_size=BATCH_SIZE, color_mode=COLOR_MODE)
 
     return train_dataset, validation_dataset
