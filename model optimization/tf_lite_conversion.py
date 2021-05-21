@@ -37,7 +37,7 @@ def convert_saved_model(model_name: str, model_dir: str,  output_dir: str, quant
     with open(output_path, "wb") as output_file:
         output_file.write(tf_lite_model)
 
-    print(f"Model converted. The model has been saved in {output_path}.")
+    print(f"Model converted. The model has been saved in {output_path}.\n\n")
 
 
 def get_image_representative_dataset(data_dir: str, normalize=False) -> Any:
