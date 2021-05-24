@@ -27,8 +27,8 @@ def convert_saved_model(model_name: str, model_dir: str,  output_dir: str, quant
         converter.optimizations = [tf.lite.Optimize.DEFAULT]
         converter.representative_dataset = representative_dataset
         converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
-        converter.inference_input_type = tf.uint8
-        converter.inference_output_type = tf.uint8
+        converter.inference_input_type = tf.int8
+        converter.inference_output_type = tf.int8
     else:
         output_path = f"{output_dir}/{model_name}.tflite"
 

@@ -102,7 +102,8 @@ void setup()
   sessionName = String.valueOf(day()) + "-" + String.valueOf(month()) + "-" + String.valueOf(year());
   
   // Ajustamos el tamaño del visor (debería ser de dimensiones iguales a las imágenes que se esperan).
-  size(1584, 1296);
+  // size(1584, 1296);
+  size(792, 648);
   
   // Inicializamos contadores.
   Arrays.fill(counters, 1);
@@ -125,7 +126,8 @@ void setup()
 
 void draw()
 {
-  image(myImage, 0, 0, 1584, 1296);
+  // image(myImage, 0, 0, 1584, 1296);
+  image(myImage, 0, 0, 792, 648);
 }
 
 void serialEvent(Serial myPort) {

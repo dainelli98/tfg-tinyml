@@ -226,13 +226,13 @@ def tensorflow_lite_model_evaluation(model_path: str, class_names_path: str, tes
     class_names = load(class_names_path)
 
     for test_dir in test_dirs:
-        tensorflow_lite_test_image(interpreter, class_names, test_dir)
+        tensorflow_lite_test_image(interpreter, class_names, test_dir, quantized=quantized)
 
     if quantized:
         print("Quantized models can perform slower as they are intended to work on ARM devices.")
 
 
-def tensorflow_lite_test_image(interpreter: Any, class_names: List[str], test_dir: str):
+def tensorflow_lite_test_image(interpreter: Any, class_names: List[str], test_dir: str, quantized: bool = False):
     """
     Hace un test sobre un conjunto de imágenes usando el modelo indicado y muestra un resumen de los resultados.
     Args:
@@ -252,7 +252,8 @@ def tensorflow_lite_test_image(interpreter: Any, class_names: List[str], test_di
     for name in class_names:
         class_dir = f"{test_dir}/{name}"
         true_labels, predictions, times = tensorflow_lite_test_class(class_dir, name, class_indexes[name], interpreter,
-                                                                     true_labels, predictions, times)
+                                                                     true_labels, predictions, times,
+                                                                     quantized=quantized)
 
     show_test_results(true_labels, predictions, class_names)
     time_summary(times)
@@ -272,7 +273,7 @@ def time_summary(times: List[float]):
 
 
 def tensorflow_lite_test_class(class_dir: str, class_name: str, class_index: int, interpreter: Any, true_labels=None,
-                               predictions=None, times=None):
+                               predictions=None, times=None, quantized: bool = False):
     """
     Realiza predicciones sobre un conjunto de imágenes pertenecientes a una misma clase.
     Args:
@@ -283,6 +284,7 @@ def tensorflow_lite_test_class(class_dir: str, class_name: str, class_index: int
         true_labels:    List[int] con las labels de predicciones anteriores.
         predictions:    List[int] con las predicciones anteriores.
         times:          List[float] con los tiempos anteriores.
+        quantized:      bool que indica si se usa un modelo quantizado.
 
     Returns:
         (List[int], List[int]) con las predicciones y las labels correspondientes.
@@ -298,19 +300,20 @@ def tensorflow_lite_test_class(class_dir: str, class_name: str, class_index: int
     for file in files:
         filepath = f"{class_dir}/{file}"
         true_labels.append(class_index)
-        predicted_class, elapsed = tensorflow_lite_test_file(filepath, interpreter)
+        predicted_class, elapsed = tensorflow_lite_test_file(filepath, interpreter, quantized=quantized)
         predictions.append(predicted_class)
         times.append(elapsed)
 
     return true_labels, predictions, times
 
 
-def tensorflow_lite_test_file(filepath: str, interpreter: Any) -> (int, float):
+def tensorflow_lite_test_file(filepath: str, interpreter: Any, quantized: bool = False) -> (int, float):
     """
     Realiza una predicción sobre un archivo.
     Args:
         filepath:       str con el path del archivo que contiene la imagen que se predice.
         interpreter:    Any interpreter que se usa para realizar las predicciones.
+        quantized:      bool que indica si se trata de un modelo cuantizado
 
     Returns:
         (int, float) con la predicción y el tiempo empleado.
@@ -320,6 +323,10 @@ def tensorflow_lite_test_file(filepath: str, interpreter: Any) -> (int, float):
 
     img = load_img(filepath, color_mode=COLOR_MODE)
     img_array = img_to_array(img)
+
+    if quantized:
+        input_scale, input_zero_point = input_details["quantization"]
+        img_array = img_array / input_scale + input_zero_point
     img_array = np.expand_dims(img_array, axis=0).astype(input_details["dtype"])
 
     interpreter.set_tensor(input_details["index"], img_array)
