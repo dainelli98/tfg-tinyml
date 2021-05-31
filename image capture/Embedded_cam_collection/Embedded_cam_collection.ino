@@ -13,7 +13,7 @@
  * El código para detectar cuando se usa el botón de la placa procede de
  * la librería del curso de edX sobre TinyML:
  * https://github.com/tinyMLx/arduino-library/blob/main/src/TinyMLShield.h
- */
+===================================================================================*/
 
 #include <Arduino_OV767X.h>
 
@@ -107,4 +107,3 @@ void loop() {
     Serial.write(data, bytesPerFrame);
   }
 }
-
