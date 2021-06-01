@@ -133,16 +133,6 @@ class PreviousResultsQueue {
   int size_;
 };
 
-// This class is designed to apply a very primitive decoding model on top of the
-// instantaneous results from running an audio recognition model on a single
-// window of samples. It applies smoothing over time so that noisy individual
-// label scores are averaged, increasing the confidence that apparent matches
-// are real.
-// To use it, you should create a class object with the configuration you
-// want, and then feed results from running a TensorFlow model into the
-// processing method. The timestamp for each subsequent call should be
-// increasing from the previous, since the class is designed to process a stream
-// of data over time.
 /*
  * Esta clase permite interpretar una serie inferencias realizadas a lo largo del tiempo
  */
@@ -173,10 +163,10 @@ class CommandRecognizer {
    * @param is_new_command: bool que indica si el último comando detectado es nuevo.
    * @return  TfLiteStatus indicando el resultado de la operación.
    */
-  TfLiteStatus ProcessLatestResults(const TfLiteTensor* latest_results,
-                                    const int32_t current_time,
-                                    const char** found_command, uint8_t* score,
-                                    bool* is_new_command);
+  TfLiteStatus process_latest_results(const TfLiteTensor* latest_results,
+                                      const int32_t current_time,
+                                      const char** found_command, uint8_t* score,
+                                      bool* is_new_command);
 
  private:
   // Configuración

@@ -43,9 +43,9 @@ class FeatureProvider {
    *                              ejecución de la función.
    * @return  TFLiteStatus de la operación.
    */
-  TfLiteStatus PopulateFeatureData(tflite::ErrorReporter* error_reporter,
-                                   int32_t last_time, int32_t current_time,
-                                   int* how_many_new_slices);
+  TfLiteStatus populate_feature_data(tflite::ErrorReporter* error_reporter,
+                                     int32_t last_time, int32_t current_time,
+                                     int* how_many_new_slices);
 
  private:
   // int con la longitud del feature data array.

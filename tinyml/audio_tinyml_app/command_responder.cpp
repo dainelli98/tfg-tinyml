@@ -21,9 +21,6 @@ void respond_to_command(tflite::ErrorReporter* error_reporter,
   static int certainty = 220;
 
   if (is_new_command) {
-    TF_LITE_REPORT_ERROR(error_reporter, "---------------------Detectado: %s\nPuntuación: %d\nTiempo: @%dms",
-                         found_command, score, current_time);
-
     
     // Encendemos led correspondiente al comando.
     if (found_command[0] == 'y') {  // yes
@@ -31,15 +28,19 @@ void respond_to_command(tflite::ErrorReporter* error_reporter,
       digitalWrite(LEDG, LOW);
     }
 
-    if (found_command[0] == 'n') {  // no
+    else if (found_command[0] == 'n') {  // no
       last_command_time = current_time;
       digitalWrite(LEDR, LOW);
     }
 
-    if (found_command[0] == 'u') {  // unknown
+    else if (found_command[0] == 'u') {  // unknown
       last_command_time = current_time;
       digitalWrite(LEDB, LOW);
     }
+
+    if (found_command[0] != 's')
+      TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nDetectado: %s\nPuntuación: %d\nTiempo: @%dms",
+                           found_command, score, current_time);
   }
 
   // Apagamos LED al rato.

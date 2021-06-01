@@ -109,7 +109,7 @@ bool readShieldButton(){
   return false;
 }
 
-// Device initialization.
+// Inicialización del dispositivo.
 void setup() {
   initialize_serial_port(9600, true);
   
@@ -140,7 +140,6 @@ void setup() {
   micro_op_resolver.AddPad();
   micro_op_resolver.AddConv2D();
   micro_op_resolver.AddReshape();
-  // micro_op_resolver.AddRelu();
   micro_op_resolver.AddRelu6();
 
   // Preparamos el interpreter que ejecuta el modelo
@@ -186,7 +185,7 @@ void loop() {
     int8_t mask_score = output->data.int8[maskIndex];
     int8_t nothing_score = output->data.int8[nothingIndex];
   
-    // Se reliza una respuesta a la inferencia realizada.
+    // Se realiza una respuesta a la inferencia realizada.
     respond_image_inference(error_reporter, face_score, mask_score, nothing_score);
   }
 }

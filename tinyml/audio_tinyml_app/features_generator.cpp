@@ -57,8 +57,8 @@ TfLiteStatus generate_features(tflite::ErrorReporter* error_reporter,
   for (size_t i = 0; i < frontend_output.size; ++i) {
     constexpr int32_t value_scale = 256;
     constexpr int32_t value_div = static_cast<int32_t>((25.6f * 26.0f) + 0.5f);
-    int32_t value =
-        ((frontend_output.values[i] * value_scale) + (value_div / 2)) / value_div;
+    int32_t value = ((frontend_output.values[i] * value_scale) + (value_div / 2)) / value_div;
+    //int32_t value = frontend_output.values[i] * QUANT_FACTOR + QUANT_OFFSET;
     value -= 128;
     if (value < -128) {
       value = -128;
@@ -66,7 +66,7 @@ TfLiteStatus generate_features(tflite::ErrorReporter* error_reporter,
     if (value > 127) {
       value = 127;
     }
-    output[i] = value;
+    output[i] = static_cast<int8_t>(value);
   }
 
   return kTfLiteOk;

@@ -11,10 +11,10 @@ FeatureProvider::FeatureProvider(int f_size, int8_t* f_data)
 
 FeatureProvider::~FeatureProvider() {}
 
-TfLiteStatus FeatureProvider::PopulateFeatureData(tflite::ErrorReporter* error_reporter,
-                                                  int32_t last_time,
-                                                  int32_t current_time,
-                                                  int* how_many_new_slices) {
+TfLiteStatus FeatureProvider::populate_feature_data(tflite::ErrorReporter* error_reporter,
+                                                    int32_t last_time,
+                                                    int32_t current_time,
+                                                    int* how_many_new_slices) {
   // Comprovamos que las medidas de los arrays.
   if (feature_size != elementCount) {
     TF_LITE_REPORT_ERROR(error_reporter,

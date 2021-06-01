@@ -15,9 +15,10 @@ CommandRecognizer::CommandRecognizer(tflite::ErrorReporter* error_reporter,
   previous_top_label_time_ = std::numeric_limits<int32_t>::min();
 }
 
-TfLiteStatus CommandRecognizer::ProcessLatestResults(
-    const TfLiteTensor* latest_results, const int32_t current_time,
-    const char** found_command, uint8_t* score, bool* is_new_command) {
+TfLiteStatus CommandRecognizer::process_latest_results(const TfLiteTensor* latest_results,
+                                                       const int32_t current_time,
+                                                       const char** found_command,
+                                                       uint8_t* score, bool* is_new_command) {
   if ((latest_results->dims->size != 2) ||
       (latest_results->dims->data[0] != 1) ||
       (latest_results->dims->data[1] != nlabels)) {

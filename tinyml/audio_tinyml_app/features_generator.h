@@ -17,7 +17,8 @@
 #include "audio_model_settings.h"
 
 #define FIXED_POINT 16
-
+#define QUANT_FACTOR 0.3137255311012268
+#define QUANT_OFFSET 127
 /*
  * Prepara el feature generator.
  * @param error_reporter: error reporter usado en la aplicación.
