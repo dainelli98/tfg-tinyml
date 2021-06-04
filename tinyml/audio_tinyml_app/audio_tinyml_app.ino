@@ -23,8 +23,8 @@
 #include "Arduino.h"
 
 #include "audio_model_settings.h"
-#include "audio_model_data.h"
-// #include "premade_audio_model_data.h"
+// #include "audio_model_data.h"
+#include "premade_audio_model_data.h"
 #include "feature_provider.h"
 #include "command_recognizer.h"
 #include "command_responder.h"
@@ -39,7 +39,7 @@ namespace {
   CommandRecognizer* audio_recognizer = nullptr;
   int32_t previous_time = 0;
   
-  constexpr int kTensorArenaSize = 6 * 1024;
+  constexpr int kTensorArenaSize = 10 * 1024;
   uint8_t tensor_arena[kTensorArenaSize];
   int8_t feature_buffer[elementCount];
   int8_t* audio_input_buffer = nullptr;
@@ -73,8 +73,8 @@ void setup() {
   error_reporter = &micro_error_reporter;
 
   // Preparamos el modelo.
-  audio_model = tflite::GetModel(audio_model_data);
-  // audio_model = tflite::GetModel(premade_audio_model_data);
+  // audio_model = tflite::GetModel(audio_model_data);
+  audio_model = tflite::GetModel(premade_audio_model_data);
   if (audio_model->version() != TFLITE_SCHEMA_VERSION) {
     TF_LITE_REPORT_ERROR(error_reporter,
                          "El modelo es de la versión %d, mientras que"
@@ -84,13 +84,13 @@ void setup() {
   }
 
   // Configuramos el OpsResolver.
-  static tflite::MicroMutableOpResolver<4> micro_op_resolver;
+  static tflite::MicroMutableOpResolver<6> micro_op_resolver;
   micro_op_resolver.AddFullyConnected();
-  // micro_op_resolver.AddDepthwiseConv2D();
+  micro_op_resolver.AddDepthwiseConv2D();
   micro_op_resolver.AddMaxPool2D();
   micro_op_resolver.AddConv2D();
   micro_op_resolver.AddReshape();
-  // micro_op_resolver.AddSoftmax();
+  micro_op_resolver.AddSoftmax();
 
   // Preparamos el interpreter que ejecuta el modelo
   static tflite::MicroInterpreter static_interpreter(audio_model, micro_op_resolver,

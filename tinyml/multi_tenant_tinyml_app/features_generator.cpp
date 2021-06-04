@@ -1,7 +1,7 @@
 #include "features_generator.h"
 
 namespace {
-  FrontendState micro_features_state;
+  FrontendState g_micro_features_state;
   bool is_first_time = true;
 }  // namespace
 
@@ -23,7 +23,7 @@ TfLiteStatus initialize_features(tflite::ErrorReporter* error_reporter) {
   config.pcan_gain_control.gain_bits = 21;
   config.log_scale.enable_log = 1;
   config.log_scale.scale_shift = 6;
-  if (!FrontendPopulateState(&config, &micro_features_state, audioSampleFrequency)) {
+  if (!FrontendPopulateState(&config, &g_micro_features_state, audioSampleFrequency)) {
     TF_LITE_REPORT_ERROR(error_reporter, "FrontendPopulateState() ha fallado.");
     return kTfLiteError;
   }
@@ -32,8 +32,8 @@ TfLiteStatus initialize_features(tflite::ErrorReporter* error_reporter) {
 }
 
 void set_features_noise_estimates(const uint32_t* estimate_presets) {
-  for (int i = 0; i < micro_features_state.filterbank.num_channels; ++i) {
-    micro_features_state.noise_reduction.estimate[i] = estimate_presets[i];
+  for (int i = 0; i < g_micro_features_state.filterbank.num_channels; ++i) {
+    g_micro_features_state.noise_reduction.estimate[i] = estimate_presets[i];
   }
 }
 
@@ -49,7 +49,7 @@ TfLiteStatus generate_features(tflite::ErrorReporter* error_reporter,
   else {
     frontend_input = input + 160;
   }
-  FrontendOutput frontend_output = FrontendProcessSamples(&micro_features_state,
+  FrontendOutput frontend_output = FrontendProcessSamples(&g_micro_features_state,
                                                           frontend_input,
                                                           input_size,
                                                           num_samples_read);
