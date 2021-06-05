@@ -21,11 +21,11 @@ TfLiteStatus CommandRecognizer::process_latest_results(const TfLiteTensor* lates
                                                        uint8_t* score, bool* is_new_command) {
   if ((latest_results->dims->size != 2) ||
       (latest_results->dims->data[0] != 1) ||
-      (latest_results->dims->data[1] != nlabels)) {
+      (latest_results->dims->data[1] != audio_nlabels)) {
     TF_LITE_REPORT_ERROR(
         error_reporter_,
         "Las dimensiones de los resultados deben ser %d, pero son "
-        "%d en con shape %d.", nlabels, latest_results->dims->data[1],
+        "%d en con shape %d.", audio_nlabels, latest_results->dims->data[1],
         latest_results->dims->size);
     return kTfLiteError;
   }
@@ -66,12 +66,12 @@ TfLiteStatus CommandRecognizer::process_latest_results(const TfLiteTensor* lates
     return kTfLiteOk;
   }
 
-  int32_t average_scores[nlabels];
+  int32_t average_scores[audio_nlabels];
   for (int offset = 0; offset < previous_results_.size(); ++offset) {
     PreviousResultsQueue::Result previous_result =
         previous_results_.from_front(offset);
     const int8_t* scores = previous_result.scores;
-    for (int i = 0; i < nlabels; ++i) {
+    for (int i = 0; i < audio_nlabels; ++i) {
       if (offset == 0) {
         average_scores[i] = scores[i] + 128;
       } else {
@@ -79,22 +79,22 @@ TfLiteStatus CommandRecognizer::process_latest_results(const TfLiteTensor* lates
       }
     }
   }
-  for (int i = 0; i < nlabels; ++i) {
+  for (int i = 0; i < audio_nlabels; ++i) {
     average_scores[i] /= how_many_results;
   }
   
   int current_top_index = 0;
   int32_t current_top_score = 0;
-  for (int i = 0; i < nlabels; ++i) {
+  for (int i = 0; i < audio_nlabels; ++i) {
     if (average_scores[i] > current_top_score) {
       current_top_score = average_scores[i];
       current_top_index = i;
     }
   }
-  const char* current_top_label = labels[current_top_index];
+  const char* current_top_label = audio_labels[current_top_index];
 
   int64_t time_since_last_top;
-  if ((previous_top_label_ == labels[0]) ||
+  if ((previous_top_label_ == audio_labels[0]) ||
       (previous_top_label_time_ == std::numeric_limits<int32_t>::min())) {
     time_since_last_top = std::numeric_limits<int32_t>::max();
   } else {

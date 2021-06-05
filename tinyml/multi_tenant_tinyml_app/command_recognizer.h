@@ -28,12 +28,12 @@ class PreviousResultsQueue {
   struct Result {
     Result() : time_(0), scores() {}
     Result(int32_t tm, int8_t* input_scores) : time_(tm) {
-      for (int i = 0; i < nlabels; ++i) {
+      for (int i = 0; i < audio_nlabels; ++i) {
         scores[i] = input_scores[i];
       }
     }
     int32_t time_;
-    int8_t scores[nlabels];
+    int8_t scores[audio_nlabels];
   };
 
   /**

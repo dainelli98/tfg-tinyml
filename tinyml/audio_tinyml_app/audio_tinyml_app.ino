@@ -23,8 +23,8 @@
 #include "Arduino.h"
 
 #include "audio_model_settings.h"
-// #include "audio_model_data.h"
-#include "premade_audio_model_data.h"
+#include "audio_model_data.h"
+// #include "premade_audio_model_data.h"
 #include "feature_provider.h"
 #include "command_recognizer.h"
 #include "command_responder.h"
@@ -73,8 +73,8 @@ void setup() {
   error_reporter = &micro_error_reporter;
 
   // Preparamos el modelo.
-  // audio_model = tflite::GetModel(audio_model_data);
-  audio_model = tflite::GetModel(premade_audio_model_data);
+  audio_model = tflite::GetModel(audio_model_data);
+  // audio_model = tflite::GetModel(premade_audio_model_data);
   if (audio_model->version() != TFLITE_SCHEMA_VERSION) {
     TF_LITE_REPORT_ERROR(error_reporter,
                          "El modelo es de la versión %d, mientras que"
@@ -92,7 +92,7 @@ void setup() {
   micro_op_resolver.AddReshape();
   micro_op_resolver.AddSoftmax();
 
-  // Preparamos el interpreter que ejecuta el modelo
+  // Preparamos el interpreter que ejecuta el modelo.
   static tflite::MicroInterpreter static_interpreter(audio_model, micro_op_resolver,
                                                      tensor_arena, kTensorArenaSize,
                                                      error_reporter);
@@ -109,7 +109,7 @@ void setup() {
   audio_output = audio_interpreter->output(0);
   audio_input_buffer = audio_input->data.int8;
 
-  // Preparamos feature provider and 
+  // Preparamos feature provider y el command_recognizer.
   static FeatureProvider static_feature_provider(elementCount, feature_buffer);
   audio_feature_provider = &static_feature_provider;
 
