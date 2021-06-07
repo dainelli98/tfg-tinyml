@@ -45,6 +45,9 @@ namespace {
   bool lastButtonState;
   bool buttonState;
   bool do_inference;
+
+  // Variable para almacenar tiempo entre inferéncias.
+  unsigned long last_inference_time;
 } // namespace
 
 /**
@@ -156,6 +159,9 @@ void setup() {
   // Preparamos pointer al input tensor.
   image_input = image_interpreter->input(0);
   image_output = image_interpreter->output(0);
+
+  // Incializamos variable de tiempo entre inferencias.
+  last_inference_time = millis();
 }
 
 // Ciclo de ejecución del programa.
@@ -174,7 +180,10 @@ void loop() {
     prepare_image_data(image_input->data.int8);
   
     // Ejecutamos la inferencia sobre los datos de imagen.
-    if (kTfLiteOk != image_interpreter->Invoke()) {
+    unsigned long t_ini = millis();
+    TfLiteStatus inference_status = image_interpreter->Invoke();
+    unsigned long t_end = millis();
+    if (kTfLiteOk != inference_status) {
       TF_LITE_REPORT_ERROR(error_reporter, "Error al realizar inferencia.");
     }
   
@@ -187,5 +196,9 @@ void loop() {
   
     // Se realiza una respuesta a la inferencia realizada.
     respond_image_inference(error_reporter, face_score, mask_score, nothing_score);
+    TF_LITE_REPORT_ERROR(error_reporter, "Tiempo de inferencia: %dms\n"
+                                         "Tiempo entre inferencias: %dms",
+                         t_end - t_ini, t_end - last_inference_time);
+    last_inference_time = t_end;
   }
 }

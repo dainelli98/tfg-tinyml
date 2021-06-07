@@ -43,6 +43,8 @@ namespace {
   uint8_t tensor_arena[kTensorArenaSize];
   int8_t feature_buffer[elementCount];
   int8_t* audio_input_buffer = nullptr;
+  
+  unsigned long last_inference_time;
 }  // namespace
 
 /**
@@ -117,6 +119,7 @@ void setup() {
   audio_recognizer = &static_recognizer;
 
   previous_time = 0;
+  last_inference_time = millis();
 }
 
 // Ciclo de ejecución del programa.
@@ -144,11 +147,14 @@ void loop() {
     audio_input_buffer[i] = feature_buffer[i];
   }
 
+  unsigned long t_ini = millis();
   TfLiteStatus invoke_status = audio_interpreter->Invoke();
+  unsigned long t_end = millis();
   if (invoke_status != kTfLiteOk) {
     TF_LITE_REPORT_ERROR(error_reporter, "Fallo en la inferencia.");
     return;
   }
+  
   // Procesamos los resultados.
   const char* found_command = nullptr;
   uint8_t score = 0;
@@ -164,4 +170,10 @@ void loop() {
   }
   
   respond_to_command(error_reporter, current_time, found_command, score, is_new_command);
+  if (is_new_command) {
+    TF_LITE_REPORT_ERROR(error_reporter, "Tiempo de inferencia: %dms\n"
+                                         "Tiempo entre inferencias: %dms",
+                         t_end - t_ini, t_end - last_inference_time);
+  }
+  last_inference_time = t_end;
 }

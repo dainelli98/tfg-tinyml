@@ -75,6 +75,7 @@ namespace {
 
   // Variable para poder usar timeout.
   unsigned long timeout_start;
+  unsigned long last_inference_time;
 } // namespace
 
 /**
@@ -230,7 +231,8 @@ void setup() {
 
   previous_time = 0;
   state = LISTEN_COMMAND;
-  timeout_start = 0;
+  timeout_start = millis();
+  last_inference_time = millis();
 }
 
 // Ciclo de ejecución del programa.
@@ -258,12 +260,16 @@ void loop() {
     for (int i = 0; i < elementCount; i++) {
       audio_input_buffer[i] = feature_buffer[i];
     }
-  
+
+    // Realizamos inferencia usando el modelo de audio.
+    unsigned long t_ini = millis();
     TfLiteStatus invoke_status = audio_interpreter->Invoke();
+    unsigned long t_end = millis();
     if (invoke_status != kTfLiteOk) {
       TF_LITE_REPORT_ERROR(error_reporter, "Fallo en la inferencia.");
       return;
     }
+    
     // Procesamos los resultados.
     const char* found_command = nullptr;
     uint8_t score = 0;
@@ -278,7 +284,16 @@ void loop() {
       return;
     }
     
+    // Mostramos resultados de inferencia.
     respond_to_command(error_reporter, current_time, found_command, score, is_new_command);
+    if (is_new_command) {
+      TF_LITE_REPORT_ERROR(error_reporter, "Tiempo de inferencia: %dms\n"
+                                           "Tiempo entre inferencias: %dms",
+                           t_end - t_ini, t_end - last_inference_time);
+    }
+    last_inference_time = t_end;
+    
+    // Modificamos el estado de la aplicación en función de los resultados obtenidos en la inferencia.
     bool button = readShieldButton();
     if ((is_new_command && found_command[0] != 'u' && found_command[0] != 's') || button) {
       if (found_command[0] == 'y' || button) {
@@ -308,7 +323,10 @@ void loop() {
     prepare_image_data(image_input->data.int8);
   
     // Ejecutamos la inferencia sobre los datos de imagen.
-    if (kTfLiteOk != image_interpreter->Invoke()) {
+    unsigned long t_ini = millis();
+    TfLiteStatus inference_status = image_interpreter->Invoke();
+    unsigned long t_end = millis();
+    if (kTfLiteOk != inference_status) {
       TF_LITE_REPORT_ERROR(error_reporter, "Error al realizar inferencia.");
     }
   
@@ -321,6 +339,10 @@ void loop() {
   
     // Se realiza una respuesta a la inferencia realizada.
     respond_image_inference(error_reporter, face_score, mask_score, nothing_score);
+    TF_LITE_REPORT_ERROR(error_reporter, "Tiempo de inferencia: %dms\n"
+                                         "Tiempo entre inferencias: %dms",
+                         t_end - t_ini, t_end - last_inference_time);
+    last_inference_time = t_end;
 
     if (state == SCAN_FACE_ENTER) {
       if (mask_score > nothing_score && mask_score > face_score) {
