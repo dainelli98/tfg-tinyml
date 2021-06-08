@@ -10,6 +10,9 @@ de los mismos.
 
 Algunos de los notebooks usados tienen scripts y módulos de python con el mismo nombre asociados que contienen funciones
 que se utilizan en dichos notebooks.
+
+GitHub puede fallar al mostrar el contenido de algunos notebooks, para solucionar el problema puede ser necesario
+recargar la página varias veces.
 ## Captura de imágenes
 Para la captura de imágenes destinadas al entrenamiento de los modelos se ha usado:
 - [Arduino_cam_collection.pde](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Arduino_cam_collection.pde):
