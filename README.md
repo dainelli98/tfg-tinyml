@@ -53,6 +53,8 @@ imagen.
   aplicando o no cuantización.
 - [tf_lite_conversion.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20optimization/tf_lite_conversion.ipynb):
   Notebook que realiza la conversión de modelos de TensorFlow en modelos TensorFlow Lite aplicando o no cuantización.
+- [tf_lite_micro_conversion.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20optimization/tf_lite_micro_conversion.ipynb):
+  Notebook que convierte modelos TensorFlow Lite a modelos TensorFlow Lite para microcontroladores usando flatbuffers.
 ### Optimización de modelos de audio
 - [audio_model_optimization.py](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20optimization/audio/audio_model_optimization.py):
   Módulo de Python que contiene las funciones y constantes empleadas para la optimización de modelos de audio.
@@ -98,7 +100,16 @@ Notebooks y scripts de Python que realizan diversas pruebas y análisis sobre mo
 - [image_optimization_analysis.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20evaluation/image/image_optimization_analysis.ipynb):
   Notebook que permite evaluar la variación de rendimiento que sufren modelos de imagen convertidos a TensorFlow Lite
   dependiendo de la optimización aplicada.
-  
+## Aplicaciones TinyML
+- [audio_tinyml_app](https://github.com/dainelli98/tfg-tinyml/tree/main/tinyml/audio_tinyml_app): Esta carpeta contiene
+  el código fuente de una aplicación TinyML que utiliza el modelo de audio entrenado para realizar predicciones sobre el
+  audio captado con el micrófono del microcontrolador.
+- [image_tinyml_app](https://github.com/dainelli98/tfg-tinyml/tree/main/tinyml/image_tinyml_app): Esta carpeta contiene
+  el código fuente de una aplicación TinyML que utiliza el modelo de imagen entrenado para realizar predicciones sobre 
+  las capturas realizadas con el módulo de cámara conectado al microcontrolador.
+- [multi_tenant_tinyml_app](https://github.com/dainelli98/tfg-tinyml/tree/main/tinyml/multi_tenant_tinyml_app): Esta
+  carpeta contiene el código fuente de una aplicación TinyML que aplica un esquema de multi-tenancy para realizar una
+  función de control de aforo.
 ## Modelos guardados
 En la carpeta [saved models](https://github.com/dainelli98/tfg-tinyml/tree/main/saved%20models) se encuentran los
 modelos que se han generado en le proyecto y algunos de los datos relacionados con su entrenamiento y optimización.
