@@ -286,7 +286,7 @@ void loop() {
     
     // Mostramos resultados de inferencia.
     respond_to_command(error_reporter, current_time, found_command, score, is_new_command);
-    if (is_new_command) {
+    if (is_new_command && found_command[0] != 's') {
       TF_LITE_REPORT_ERROR(error_reporter, "Tiempo de inferencia: %dms\n"
                                            "Tiempo entre inferencias: %dms",
                            t_end - t_ini, t_end - last_inference_time);
@@ -298,21 +298,22 @@ void loop() {
     if ((is_new_command && found_command[0] != 'u' && found_command[0] != 's') || button) {
       if (found_command[0] == 'y' || button) {
         if (ocupacion >= MAX_AFORO) {
-          TF_LITE_REPORT_ERROR(error_reporter, "Se ha alcanzado ya el aforo máximo: %d.",
+          TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nSe ha alcanzado ya el aforo máximo: %d.",
                                MAX_AFORO);
           if (button) {
-            TF_LITE_REPORT_ERROR(error_reporter, "Se ha forzado entrada con botón. Se reduce ocupación en 1.");
+            TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nSe ha forzado entrada con botón. "
+                                                 "Se reduce ocupación en 1.");
             --ocupacion;
           }
         }
-        TF_LITE_REPORT_ERROR(error_reporter, "Detectado comando de entrada.\nOcupación actual: %d\nAforo máximo: %d"
-                                             "\nInciando escaneo facial de entrada.", ocupacion, MAX_AFORO);
+        TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nDetectado comando de entrada.\nOcupación actual: %d"
+                                             "\nAforo máximo: %d\nInciando escaneo facial de entrada.", ocupacion, MAX_AFORO);
         state = SCAN_FACE_ENTER;
         timeout_start = millis();
       }
       else if (found_command[0] == 'n') {
-        TF_LITE_REPORT_ERROR(error_reporter, "Detectado comando de salida.\nOcupación actual: %d\nAforo máximo: %d"
-                                             "\nInciando escaneo facial de salida.", ocupacion, MAX_AFORO);
+        TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nDetectado comando de salida.\nOcupación actual: %d"
+                                             "\nAforo máximo: %d\nInciando escaneo facial de salida.", ocupacion, MAX_AFORO);
         state = SCAN_FACE_EXIT;
         timeout_start = millis();
       }
@@ -347,7 +348,7 @@ void loop() {
     if (state == SCAN_FACE_ENTER) {
       if (mask_score > nothing_score && mask_score > face_score) {
         ++ocupacion;
-        TF_LITE_REPORT_ERROR(error_reporter, "Se ha identificado una cara con mascarilla."
+        TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nSe ha identificado una cara con mascarilla."
                                              "\nSe permite la entrada.\nOcupación: %d/%d", ocupacion, MAX_AFORO);
         state = LISTEN_COMMAND;
       }
@@ -356,7 +357,7 @@ void loop() {
     else {
       if ((mask_score > nothing_score && mask_score > face_score) || (face_score > nothing_score && !MASK_TO_EXIT)) {
         --ocupacion;
-        TF_LITE_REPORT_ERROR(error_reporter, "Se ha identificado una cara."
+        TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nSe ha identificado una cara."
                                              "\nSe permite la salida.\nOcupación: %d/%d", ocupacion, MAX_AFORO);
         state = LISTEN_COMMAND;
       }
@@ -364,8 +365,8 @@ void loop() {
 
     if (millis() >= timeout_start + FACE_TIMEOUT && state != LISTEN_COMMAND) {
       state = LISTEN_COMMAND;
-      TF_LITE_REPORT_ERROR(error_reporter, "No se ha detectado una cara dentro del limite de tiempo establecido."
-                                           "\nSe vuelve a la espera de comando de entrada o salida.");
+      TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nNo se ha detectado una cara dentro del limite de "
+                                           "tiempo establecido.\nSe vuelve a la espera de comando de entrada o salida.");
     }
   }
 }

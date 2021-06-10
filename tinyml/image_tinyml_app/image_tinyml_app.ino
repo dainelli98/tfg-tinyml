@@ -169,9 +169,9 @@ void loop() {
   if (readShieldButton()) {
     do_inference = not do_inference;
     if (do_inference)
-      Serial.println("Inferencia iniciada.");
+      Serial.println("---------------------\nInferencia iniciada.");
     else
-      Serial.println("Inferencia detenida.");  
+      Serial.println("---------------------\nInferencia detenida.");  
   }
 
   if (do_inference) {

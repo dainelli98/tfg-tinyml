@@ -1,0 +1,346 @@
+Serial port inicializado.
+==============================================Usuario se no usa mascarilla==============================================
+---------------------
+Inferencia iniciada.
+---------------------
+face score:	-69
+mask score:	-21
+nothing_score:	5
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 8956ms
+---------------------
+face score:	13
+mask score:	-43
+nothing_score:	-99
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1581ms
+---------------------
+face score:	6
+mask score:	-32
+nothing_score:	-86
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	42
+mask score:	-64
+nothing_score:	-127
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	28
+mask score:	-70
+nothing_score:	-114
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	63
+mask score:	-79
+nothing_score:	-128
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	8
+mask score:	-60
+nothing_score:	-102
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	37
+mask score:	-72
+nothing_score:	-128
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	25
+mask score:	-56
+nothing_score:	-128
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	3
+mask score:	-50
+nothing_score:	-91
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	12
+mask score:	-75
+nothing_score:	-95
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	29
+mask score:	-68
+nothing_score:	-111
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	24
+mask score:	-72
+nothing_score:	-128
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	5
+mask score:	-69
+nothing_score:	-93
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	14
+mask score:	-57
+nothing_score:	-85
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-5
+mask score:	-52
+nothing_score:	-82
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	-11
+mask score:	-74
+nothing_score:	-62
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	18
+mask score:	-87
+nothing_score:	-38
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	35
+mask score:	-54
+nothing_score:	-20
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	29
+mask score:	-64
+nothing_score:	-92
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	14
+mask score:	-70
+nothing_score:	-54
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+Inferencia detenida.
+===============================================Usuario se pone mascarilla===============================================
+---------------------
+Inferencia iniciada.
+---------------------
+face score:	-49
+mask score:	17
+nothing_score:	-94
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 22287ms
+---------------------
+face score:	-45
+mask score:	14
+nothing_score:	-113
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-52
+mask score:	4
+nothing_score:	-116
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-49
+mask score:	12
+nothing_score:	-115
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-62
+mask score:	22
+nothing_score:	-104
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-51
+mask score:	15
+nothing_score:	-82
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	-60
+mask score:	23
+nothing_score:	-95
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-64
+mask score:	15
+nothing_score:	-102
+Tiempo de inferencia: 403ms
+Tiempo entre inferencias: 1595ms
+---------------------
+face score:	-41
+mask score:	6
+nothing_score:	-85
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-67
+mask score:	-1
+nothing_score:	-104
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-65
+mask score:	7
+nothing_score:	-72
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-58
+mask score:	23
+nothing_score:	-92
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-60
+mask score:	10
+nothing_score:	-96
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-41
+mask score:	11
+nothing_score:	-73
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1593ms
+---------------------
+face score:	-59
+mask score:	9
+nothing_score:	-79
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-60
+mask score:	14
+nothing_score:	-70
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-45
+mask score:	14
+nothing_score:	-77
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-53
+mask score:	15
+nothing_score:	-99
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-42
+mask score:	-3
+nothing_score:	-63
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+Inferencia detenida.
+===================================================Usuario se retira====================================================
+---------------------
+Inferencia iniciada.
+---------------------
+face score:	-15
+mask score:	-28
+nothing_score:	60
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 34988ms
+---------------------
+face score:	-14
+mask score:	-34
+nothing_score:	65
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1583ms
+---------------------
+face score:	-21
+mask score:	-16
+nothing_score:	59
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1589ms
+---------------------
+face score:	-18
+mask score:	-37
+nothing_score:	60
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-8
+mask score:	-52
+nothing_score:	61
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-14
+mask score:	-35
+nothing_score:	54
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1592ms
+---------------------
+face score:	-16
+mask score:	-34
+nothing_score:	59
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1589ms
+---------------------
+face score:	-7
+mask score:	-84
+nothing_score:	84
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-18
+mask score:	-78
+nothing_score:	89
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-19
+mask score:	-78
+nothing_score:	87
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-10
+mask score:	-75
+nothing_score:	79
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-8
+mask score:	-73
+nothing_score:	84
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1590ms
+---------------------
+face score:	-11
+mask score:	-70
+nothing_score:	86
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	-20
+mask score:	-128
+nothing_score:	83
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1591ms
+---------------------
+face score:	49
+mask score:	-128
+nothing_score:	104
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1588ms
+---------------------
+Inferencia detenida.

@@ -1,0 +1,191 @@
+Serial port inicializado.
+==============================================Silencio durante 10 segundos==============================================
+==========================================Se pronuncia "yes" de forma continua==========================================
+---------------------
+Detectado: unknown
+Puntuación: 203
+Tiempo: @15328ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 202
+Tiempo: @18144ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 206
+Tiempo: @19696ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 209
+Tiempo: @21232ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @22768ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 202
+Tiempo: @25072ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 206
+Tiempo: @26624ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 205
+Tiempo: @28160ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 66ms
+---------------------
+Detectado: unknown
+Puntuación: 204
+Tiempo: @29696ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 202
+Tiempo: @33616ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: yes
+Puntuación: 201
+Tiempo: @45024ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+==========================================Se pronuncia "no" de forma continua===========================================
+Detectado: unknown
+Puntuación: 201
+Tiempo: @45472ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @48560ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 66ms
+---------------------
+Detectado: unknown
+Puntuación: 204
+Tiempo: @50096ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 204
+Tiempo: @51632ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @53168ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @56000ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 66ms
+---------------------
+Detectado: unknown
+Puntuación: 206
+Tiempo: @57536ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 204
+Tiempo: @60672ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: yes
+Puntuación: 202
+Tiempo: @63936ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+==================================Se pronuncian palabras aleatorias de forma continua===================================
+---------------------
+Detectado: yes
+Puntuación: 201
+Tiempo: @66704ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @67088ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: yes
+Puntuación: 203
+Tiempo: @78624ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 204
+Tiempo: @79152ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @85552ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @88704ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @90496ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: unknown
+Puntuación: 202
+Tiempo: @92096ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 63ms
+---------------------
+Detectado: unknown
+Puntuación: 201
+Tiempo: @95888ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: no
+Puntuación: 201
+Tiempo: @104592ms
+Tiempo de inferencia: 57ms
+Tiempo entre inferencias: 64ms
+---------------------
+Detectado: no
+Puntuación: 201
+Tiempo: @104656ms
+Tiempo de inferencia: 56ms
+Tiempo entre inferencias: 64ms
