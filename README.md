@@ -15,7 +15,7 @@ GitHub puede fallar al mostrar el contenido de algunos notebooks, para soluciona
 recargar la página varias veces.
 ## Captura de imágenes
 Para la captura de imágenes destinadas al entrenamiento de los modelos se ha usado:
-- [Arduino_cam_collection.pde](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Arduino_cam_collection.pde):
+- [Arduino_cam_collection.pde](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Arduino_cam_collection/Arduino_cam_collection.pde):
   Script de Processing que recibe imágenes capturadas con Arduino, las etiqueta y las guarda.
 - [Embedded_cam_collection.ino](https://github.com/dainelli98/tfg-tinyml/blob/main/image%20capture/Embedded_cam_collection/Embedded_cam_collection.ino):
   Programa para Arduino Nano 33 BLE Sense que captura imágenes y las transmite al equipo conectado al microcontrolador.
