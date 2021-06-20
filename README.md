@@ -8,7 +8,7 @@ Este repositorio no contiene los datos utilizados para entrenar los modelos de a
 debido a limitaciones de alojamiento y para conservar la privacidad de las personas que han contribuido en la captura
 de los mismos.
 
-Algunos de los notebooks usados tienen scripts y módulos de python con el mismo nombre asociados que contienen funciones
+Algunos de los notebooks usados tienen scripts y módulos de Python con el mismo nombre asociados que contienen funciones
 que se utilizan en dichos notebooks.
 
 GitHub puede fallar al mostrar el contenido de algunos notebooks, para solucionar el problema puede ser necesario
@@ -38,16 +38,16 @@ Notebooks y scripts de Python complementarios para el entrenamiento de modelos d
 imagen.
 ### Entrenamiento de modelos de audio
 - [audio_model_training.py](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20training/audio/audio_model_training.py):
-  Módulo de Python que contiene las funciones y constantes utilizadas para entrenar modelos de Tensorflow que clasifican 
+  Módulo de Python que contiene las funciones y constantes utilizadas para entrenar modelos de TensorFlow que clasifican 
   segmentos de audio.
 - [audio_model_training.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20training/audio/audio_model_training.ipynb):
-  Notebook que realiza el entrenamiento de modelos de Tensorflow que clasifican segmentos de audio.
+  Notebook que realiza el entrenamiento de modelos de TensorFlow que clasifican segmentos de audio.
 ### Entrenamiento de modelos de imagen
 - [image_model_training.py](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20training/image/image_model_training.py):
-  Módulo de Python que contiene las funciones y constantes utilizadas para entrenar modelos de Tensorflow que clasifican 
+  Módulo de Python que contiene las funciones y constantes utilizadas para entrenar modelos de TensorFlow que clasifican 
   imágenes.
 - [image_model_training.ipynb](https://github.com/dainelli98/tfg-tinyml/blob/main/model%20training/image/image_model_training.ipynb):
-  Notebook que realiza el entrenamiento de modelos de Tensorflow que clasifican imágenes.
+  Notebook que realiza el entrenamiento de modelos de TensorFlow que clasifican imágenes.
 ## Optimización de modelos
 Notebooks y scripts de Python complementarios para la optimización de modelos de aprendizaje automático de sonido e
 imagen.

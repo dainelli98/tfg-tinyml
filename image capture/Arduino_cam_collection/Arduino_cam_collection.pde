@@ -6,7 +6,7 @@
  Desarrollado por Daniel Martín Martínez para la realización del
  Trabajo de Fin de Grado titulado Aplicación de modelos de aprendizaje
  automático en microcontroladores.
- Este programa se basa en el condigo de CameraVisualizerRawBytes que se presenta
+ Este programa se basa en el código de CameraVisualizerRawBytes que se presenta
  en el artículo:
  https://blog.arduino.cc/2020/06/24/machine-vision-with-low-cost-camera-modules/
 */
@@ -27,7 +27,7 @@ final int cameraHeight = 144;
 final int cameraBytesPerPixel = 2;
 final int bytesPerFrame = cameraWidth * cameraHeight * cameraBytesPerPixel;
 
-// Carpeta donde se guardan las imágenes
+// Carpeta donde se guardan las imágenes.
 final String path = "/home/daniel/Documentos/TFG/Samples";
 
 String sessionName;
@@ -46,7 +46,7 @@ int[] counters = new int[nclasses];
 
 /**
  Pregunta al usuario a que clase pertenece la imagen tomada.
- @returns  int que indica la classe de la imagen tomada.
+ @returns  int que indica la clase de la imagen tomada.
 */
 void ask_class() {
   print("Indica la clase de la imagen que tomarás a continuación pulsando el botón indicado:\n\t0 - No guardar");
@@ -114,7 +114,6 @@ void setup()
   //myPort = new Serial(this, "/dev/ttyACM0", 9600);           // Linux
   //myPort = new Serial(this, "/dev/cu.usbmodem14401", 9600);  // Mac
 
-  // wait for full frame of bytes
   myPort.buffer(bytesPerFrame);  
   
   selectedClass = -1;
@@ -133,11 +132,6 @@ void draw()
 void serialEvent(Serial myPort) {
   // Leemos los datos que llegan a través del puerto Serial.
   myPort.readBytes(frameBuffer);
-  
-  /**for (int i= 0; i < bytesPerFrame; ++i) {
-    print(frameBuffer[i]);
-    print(',');
-  }*/
   
   // Accedemos a los bytes mediante un ByteBuffer.
   ByteBuffer bb = ByteBuffer.wrap(frameBuffer);
