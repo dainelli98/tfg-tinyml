@@ -1,0 +1,266 @@
+Serial port inicializado.
+==================================================Secuencia de entrada==================================================
+---------------------
+Detectado: yes
+Puntuación: 201
+Tiempo: @5936ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de entrada.
+Ocupación actual: 0
+Aforo máximo: 10
+Iniciando escaneo facial de entrada.
+---------------------
+face score:	-27
+mask score:	33
+nothing_score:	-108
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1305ms
+---------------------
+Se ha identificado una cara con mascarilla.
+Se permite la entrada.
+Ocupación: 1/10
+==================================================Secuencia de entrada==================================================
+---------------------
+Detectado: yes
+Puntuación: 205
+Tiempo: @18320ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de entrada.
+Ocupación actual: 1
+Aforo máximo: 10
+Iniciando escaneo facial de entrada.
+---------------------
+face score:	-45
+mask score:	5
+nothing_score:	-117
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 2475ms
+---------------------
+Se ha identificado una cara con mascarilla.
+Se permite la entrada.
+Ocupación: 2/10
+===========================================Secuencia de salida (con mascarilla)=========================================
+---------------------
+Detectado: no
+Puntuación: 205
+Tiempo: @26384ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 62ms
+---------------------
+Detectado comando de salida.
+Ocupación actual: 2
+Aforo máximo: 10
+Iniciando escaneo facial de salida.
+---------------------
+face score:	-42
+mask score:	19
+nothing_score:	-124
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1999ms
+---------------------
+Se ha identificado una cara.
+Se permite la salida.
+Ocupación: 1/10
+====================================Secuencia de entrada incompleta (sin mascarilla)====================================
+---------------------
+Detectado: unknown
+Puntuación: 202
+Tiempo: @32096ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado: unknown
+Puntuación: 207
+Tiempo: @33616ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 59ms
+---------------------
+Detectado: yes
+Puntuación: 201
+Tiempo: @45008ms
+Tiempo de inferencia: 53ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de entrada.
+Ocupación actual: 1
+Aforo máximo: 10
+Iniciando escaneo facial de entrada.
+---------------------
+face score:	12
+mask score:	-35
+nothing_score:	-123
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1004ms
+---------------------
+face score:	-7
+mask score:	-40
+nothing_score:	-102
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	5
+mask score:	-40
+nothing_score:	-111
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	-3
+mask score:	-40
+nothing_score:	-97
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	2
+mask score:	-41
+nothing_score:	-101
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	-15
+mask score:	-34
+nothing_score:	-111
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	6
+mask score:	-36
+nothing_score:	-128
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+No se ha detectado una cara dentro del limite de tiempo establecido.
+Se vuelve a la espera de comando de entrada o salida.
+===========================================Secuencia de salida (sin mascarilla)=========================================
+---------------------
+Detectado: no
+Puntuación: 207
+Tiempo: @56704ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de salida.
+Ocupación actual: 1
+Aforo máximo: 10
+Iniciando escaneo facial de salida.
+---------------------
+face score:	-1
+mask score:	-41
+nothing_score:	-101
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 2502ms
+---------------------
+Se ha identificado una cara.
+Se permite la salida.
+Ocupación: 0/10
+=====================================Secuencia de entrada incompleta (sin persona)======================================
+---------------------
+Detectado: yes
+Puntuación: 212
+Tiempo: @76768ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de entrada.
+Ocupación actual: -1
+Aforo máximo: 10
+Iniciando escaneo facial de entrada.
+---------------------
+face score:	10
+mask score:	-73
+nothing_score:	69
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 2195ms
+---------------------
+face score:	7
+mask score:	-76
+nothing_score:	71
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1588ms
+---------------------
+face score:	3
+mask score:	-64
+nothing_score:	66
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	7
+mask score:	-60
+nothing_score:	67
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	12
+mask score:	-55
+nothing_score:	68
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	6
+mask score:	-54
+nothing_score:	62
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+No se ha detectado una cara dentro del limite de tiempo establecido.
+Se vuelve a la espera de comando de entrada o salida.
+======================================Secuencia de salida incompleta (sin persona)======================================
+---------------------
+Detectado: no
+Puntuación: 206
+Tiempo: @90256ms
+Tiempo de inferencia: 54ms
+Tiempo entre inferencias: 61ms
+---------------------
+Detectado comando de salida.
+Ocupación actual: -1
+Aforo máximo: 10
+Iniciando escaneo facial de salida.
+---------------------
+face score:	-13
+mask score:	-29
+nothing_score:	57
+Tiempo de inferencia: 402ms
+Tiempo entre inferencias: 1346ms
+---------------------
+face score:	-8
+mask score:	-39
+nothing_score:	59
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1596ms
+---------------------
+face score:	-10
+mask score:	-33
+nothing_score:	58
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	-17
+mask score:	-31
+nothing_score:	56
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	-2
+mask score:	-32
+nothing_score:	51
+Tiempo de inferencia: 400ms
+Tiempo entre inferencias: 1599ms
+---------------------
+face score:	-8
+mask score:	-32
+nothing_score:	55
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1600ms
+---------------------
+face score:	-11
+mask score:	-33
+nothing_score:	50
+Tiempo de inferencia: 401ms
+Tiempo entre inferencias: 1599ms
+---------------------
+No se ha detectado una cara dentro del limite de tiempo establecido.
+Se vuelve a la espera de comando de entrada o salida.

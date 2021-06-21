@@ -307,13 +307,13 @@ void loop() {
           }
         }
         TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nDetectado comando de entrada.\nOcupación actual: %d"
-                                             "\nAforo máximo: %d\nInciando escaneo facial de entrada.", ocupacion, MAX_AFORO);
+                                             "\nAforo máximo: %d\nIniciando escaneo facial de entrada.", ocupacion, MAX_AFORO);
         state = SCAN_FACE_ENTER;
         timeout_start = millis();
       }
       else if (found_command[0] == 'n') {
         TF_LITE_REPORT_ERROR(error_reporter, "---------------------\nDetectado comando de salida.\nOcupación actual: %d"
-                                             "\nAforo máximo: %d\nInciando escaneo facial de salida.", ocupacion, MAX_AFORO);
+                                             "\nAforo máximo: %d\nIniciando escaneo facial de salida.", ocupacion, MAX_AFORO);
         state = SCAN_FACE_EXIT;
         timeout_start = millis();
       }
